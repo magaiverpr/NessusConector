@@ -1,7 +1,7 @@
 
 # Nessus Conector
 
-  en-US / [pt-BR](readme_pt-br.md)
+[en-US](README.md) / pt-BR
 
 Esse plugin tem por objetivo conectar o Nessus com o GLPI, para sincronizar as vulnerabilidades achadas com os ativos para gerar um histórico e também criar chamados baseados em cada vulnerabilidade achada para tratamento e documentação interna.
 
