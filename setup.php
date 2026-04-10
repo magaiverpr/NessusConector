@@ -39,7 +39,7 @@ function plugin_version_nessusglpi(): array
     return [
         'name'         => __('Nessus Conector', 'nessusglpi'),
         'version'      => PLUGIN_NESSUSGLPI_VERSION,
-        'author'       => 'Codex',
+        'author'       => 'Daniel Berton, Codex',
         'license'      => 'GPLv3+',
         'homepage'     => 'https://glpi-project.org',
         'requirements' => [
