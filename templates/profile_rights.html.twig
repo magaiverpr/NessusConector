@@ -1,0 +1,8 @@
+<div class="card card-body">
+  <h3>{{ __('Plugin rights', 'nessusglpi') }}</h3>
+  <ul>
+    {% for right in rights %}
+      <li><strong>{{ right.label }}</strong> - <code>{{ right.field }}</code></li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,0 +1,659 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Nessus Conector\n"
+"Language: fr_FR\n"
+"Language-Team: Francais (France)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/TicketService.php:73
+msgid "[Nessus] Pending host: %s"
+msgstr ""
+
+#: src/Config.php:114
+msgid "Access key"
+msgstr ""
+
+#: src/NessusClient.php:79
+msgid "Access key and secret key are required."
+msgstr ""
+
+#: src/Vulnerability.php:107
+#: front/scan.php:84
+#: front/scan.vulnerabilities.php:240
+msgid "Actions"
+msgstr "Actions"
+
+#: front/scan.php:76
+msgid "Add"
+msgstr ""
+
+#: src/Config.php:113
+msgid "API URL"
+msgstr ""
+
+#: front/scan.php:74
+msgid "Are you sure you want to delete the selected scans and all plugin data related to them?"
+msgstr ""
+
+#: src/Config.php:117
+msgid "Asset types for matching"
+msgstr ""
+
+#: front/scan.vulnerabilities.php:176
+#: front/vulnerability.form.php:271
+msgid "Back"
+msgstr ""
+
+#: src/Config.php:74
+msgid "Computer"
+msgstr ""
+
+#: src/Scan.php:151
+msgid "Configuration"
+msgstr "Configuration"
+
+#: front/config.form.php:33
+msgid "Connection successful."
+msgstr ""
+
+#: src/NessusClient.php:26
+msgid "Connection successful. Nessus status: %s"
+msgstr ""
+
+#: src/NessusClient.php:179
+msgid "Connection to the Nessus server timed out."
+msgstr ""
+
+#: front/vulnerability.form.php:303
+msgid "CPE"
+msgstr ""
+
+#: src/Vulnerability.php:99
+#: front/scan.vulnerabilities.php:237
+msgid "Create selected tickets"
+msgstr ""
+
+#: src/Vulnerability.php:323
+#: front/scan.vulnerabilities.php:280
+msgid "Create ticket"
+msgstr "Creer un ticket"
+
+#: front/vulnerability.php:18
+msgid "Current"
+msgstr ""
+
+#: src/Vulnerability.php:47
+msgid "Current vulnerabilities"
+msgstr ""
+
+#: front/host.php:48
+#: front/scan.php:81
+msgid "Delete selected"
+msgstr "Supprimer la selection"
+
+#: front/host.php:28
+msgid "Deleted %d imported host(s)."
+msgstr ""
+
+#: front/scan.php:31
+msgid "Deleted %d scan(s)."
+msgstr ""
+
+#: src/TicketService.php:321
+#: front/vulnerability.form.php:284
+msgid "Description"
+msgstr "Description"
+
+#: src/TicketService.php:368
+msgid "Details"
+msgstr ""
+
+#: front/scan.php:75
+msgid "Do you want to synchronize this scan now?"
+msgstr ""
+
+#: front/scan.php:99
+msgid "Edit"
+msgstr ""
+
+#: front/vulnerability.form.php:302
+msgid "Exploit availability"
+msgstr ""
+
+#: front/scanrun.php:18
+msgid "Finished at"
+msgstr ""
+
+#: src/ScanRun.php:29
+msgid "History"
+msgstr ""
+
+#: front/scan.vulnerabilities.php:240
+#: front/vulnerability.form.php:292
+msgid "Host"
+msgstr "Hote"
+
+#: src/TicketService.php:362
+msgid "Host imported from Nessus without a confirmed asset link."
+msgstr ""
+
+#: src/TicketService.php:63
+msgid "Host not found."
+msgstr ""
+
+#: src/HostTicket.php:22
+msgid "Host ticket link"
+msgstr ""
+
+#: front/host.php:51
+msgid "Hostname"
+msgstr ""
+
+#: front/vulnerability.form.php:176
+msgid "Hosts"
+msgstr ""
+
+#: src/SyncService.php:113
+msgid "Imported %d host(s) and %d vulnerability entries."
+msgstr ""
+
+#: src/Host.php:23
+msgid "Imported host"
+msgstr "Hote importe"
+
+#: front/vulnerability.form.php:202
+msgid "Imported host not found for this vulnerability."
+msgstr ""
+
+#: front/host.php:33
+#: front/host.php:38
+msgid "Imported hosts"
+msgstr "Hotes importes"
+
+#: src/NessusClient.php:199
+msgid "Invalid Nessus API URL."
+msgstr ""
+
+#: src/NessusClient.php:195
+msgid "Invalid Nessus API URL. Check for spaces or invalid characters."
+msgstr ""
+
+#: src/NessusClient.php:75
+msgid "Invalid Nessus API URL. Use something like https://nessus.example.local:8834"
+msgstr ""
+
+#: src/TicketService.php:311
+msgid "Last seen"
+msgstr ""
+
+#: front/scan.php:84
+msgid "Last synchronization"
+msgstr "Derniere synchronisation"
+
+#: src/Vulnerability.php:214
+msgid "Latest synchronization"
+msgstr "Derniere synchronisation"
+
+#: front/host.php:51
+msgid "Linked asset"
+msgstr ""
+
+#: src/TicketService.php:367
+#: front/host.php:51
+msgid "Match status"
+msgstr ""
+
+#: src/SyncService.php:469
+msgid "Matched with %s #%d"
+msgstr ""
+
+#: src/TicketService.php:330
+msgid "Message"
+msgstr ""
+
+#: front/vulnerability.form.php:300
+msgid "Modification date"
+msgstr ""
+
+#: src/Scan.php:209
+#: src/TicketService.php:306
+#: src/Vulnerability.php:105
+#: front/scan.php:84
+#: front/scan.vulnerabilities.php:240
+#: front/vulnerability.php:18
+msgid "Name"
+msgstr "Nom"
+
+#: src/Config.php:104
+msgid "Nessus API configuration"
+msgstr ""
+
+#: src/NessusClient.php:133
+msgid "Nessus API returned an invalid JSON response."
+msgstr ""
+
+#: src/NessusClient.php:71
+msgid "Nessus API URL is not configured."
+msgstr ""
+
+#: src/Profile.php:172
+#: src/Scan.php:125
+#: setup.php:40
+msgid "Nessus Conector"
+msgstr "Integrateur Nessus"
+
+#: src/Config.php:25
+#: src/Profile.php:25
+#: front/config.form.php:46
+msgid "Nessus configuration"
+msgstr ""
+
+#: src/TicketService.php:329
+msgid "Nessus detail error"
+msgstr ""
+
+#: src/Profile.php:37
+msgid "Nessus host tickets"
+msgstr ""
+
+#: src/Scan.php:27
+#: src/Scan.php:198
+#: front/scan.form.php:102
+msgid "Nessus scan"
+msgstr "Scan Nessus"
+
+#: src/ScanRun.php:23
+msgid "Nessus scan run"
+msgstr "Execution du scan Nessus"
+
+#: src/Profile.php:19
+#: front/scan.php:53
+#: front/scan.php:61
+msgid "Nessus scans"
+msgstr ""
+
+#: src/Profile.php:31
+msgid "Nessus vulnerabilities"
+msgstr ""
+
+#: src/TicketService.php:294
+#: src/Vulnerability.php:25
+msgid "Nessus vulnerability"
+msgstr ""
+
+#: src/Config.php:75
+msgid "Network equipment"
+msgstr ""
+
+#: front/vulnerability.php:29
+msgid "No"
+msgstr ""
+
+#: src/SyncService.php:470
+msgid "No asset match found with the configured item types."
+msgstr ""
+
+#: src/Vulnerability.php:53
+msgid "No imported vulnerabilities for this asset yet."
+msgstr ""
+
+#: front/vulnerability.ticket.php:60
+msgid "No tickets were created."
+msgstr ""
+
+#: src/NessusClient.php:130
+msgid "No valid response was received from the Nessus server."
+msgstr ""
+
+#: front/scan.vulnerabilities.php:227
+msgid "No vulnerabilities imported for this scan yet."
+msgstr ""
+
+#: front/scan.php:103
+msgid "Open in Nessus"
+msgstr "Ouvrir dans Nessus"
+
+#: src/Vulnerability.php:315
+#: front/scan.vulnerabilities.php:274
+msgid "Open new ticket"
+msgstr "Ouvrir un nouveau ticket"
+
+#: src/ScanRun.php:40
+msgid "Open the dedicated history page to inspect synchronization runs."
+msgstr ""
+
+#: front/vulnerability.form.php:129
+msgid "Output"
+msgstr ""
+
+#: src/TicketService.php:339
+msgid "Outputs"
+msgstr "Sorties"
+
+#: src/TicketService.php:316
+msgid "Overview"
+msgstr "Vue d ensemble"
+
+#: front/vulnerability.form.php:301
+msgid "Patch publication date"
+msgstr ""
+
+#: src/Config.php:77
+msgid "Phone"
+msgstr ""
+
+#: src/TicketService.php:335
+msgid "Plugin attributes"
+msgstr ""
+
+#: src/TicketService.php:336
+msgid "Plugin information"
+msgstr ""
+
+#: src/TicketService.php:323
+msgid "Plugin output"
+msgstr ""
+
+#: src/Profile.php:189
+#: templates/profile_rights.html.twig:2
+msgid "Plugin rights"
+msgstr ""
+
+#: front/profile.rights.php:18
+msgid "Plugin rights updated successfully."
+msgstr ""
+
+#: src/TicketService.php:318
+#: front/vulnerability.form.php:176
+msgid "Port"
+msgstr ""
+
+#: src/Config.php:76
+msgid "Printer"
+msgstr ""
+
+#: front/profile.rights.php:13
+msgid "Profile not found."
+msgstr ""
+
+#: src/TicketService.php:319
+msgid "Protocol"
+msgstr ""
+
+#: front/vulnerability.form.php:299
+msgid "Publication date"
+msgstr ""
+
+#: src/Profile.php:194
+msgid "Right"
+msgstr ""
+
+#: front/vulnerability.form.php:295
+msgid "Risk factor"
+msgstr ""
+
+#: src/TicketService.php:337
+msgid "Risk information"
+msgstr ""
+
+#: src/Profile.php:220
+msgid "Save"
+msgstr ""
+
+#: front/scan.vulnerabilities.php:173
+#: front/scanrun.php:18
+msgid "Scan"
+msgstr ""
+
+#: front/scan.form.php:38
+#: front/scan.form.php:83
+msgid "Scan %s"
+msgstr ""
+
+#: front/scan.form.php:52
+msgid "Scan created and initial synchronization completed successfully."
+msgstr ""
+
+#: front/scan.form.php:56
+msgid "Scan created successfully, but the initial synchronization failed: %s"
+msgstr ""
+
+#: front/scan.php:84
+msgid "Scan executed at"
+msgstr "Scan execute le"
+
+#: src/Scan.php:165
+#: src/ScanRun.php:39
+#: front/scanrun.php:11
+#: front/scanrun.php:16
+msgid "Scan history"
+msgstr "Historique des scans"
+
+#: src/Scan.php:206
+#: front/scan.php:84
+msgid "Scan ID"
+msgstr ""
+
+#: src/Vulnerability.php:201
+msgid "Scan ID %s"
+msgstr ""
+
+#: front/scan.form.php:32
+#: front/scan.form.php:77
+msgid "Scan ID is required."
+msgstr ""
+
+#: front/vulnerability.form.php:204
+msgid "Scan not found for this vulnerability."
+msgstr ""
+
+#: src/SyncService.php:18
+#: front/scan.vulnerabilities.php:14
+#: front/scan.vulnerabilities.php:19
+msgid "Scan not found."
+msgstr ""
+
+#: front/scan.form.php:92
+msgid "Scan updated successfully."
+msgstr ""
+
+#: front/scan.vulnerabilities.php:168
+#: front/scan.vulnerabilities.php:171
+msgid "Scan vulnerabilities"
+msgstr ""
+
+#: src/Scan.php:143
+msgid "Scans"
+msgstr "Scans"
+
+#: src/Config.php:115
+msgid "Secret key"
+msgstr ""
+
+#: front/vulnerability.form.php:286
+msgid "See Also"
+msgstr ""
+
+#: src/Vulnerability.php:98
+#: front/scan.vulnerabilities.php:236
+msgid "Select all"
+msgstr ""
+
+#: front/host.php:22
+msgid "Select at least one imported host to delete."
+msgstr ""
+
+#: front/scan.php:25
+msgid "Select at least one scan to delete."
+msgstr ""
+
+#: front/vulnerability.ticket.php:33
+msgid "Select at least one vulnerability."
+msgstr ""
+
+#: src/TicketService.php:307
+#: src/Vulnerability.php:104
+#: front/scan.vulnerabilities.php:240
+#: front/vulnerability.php:18
+msgid "Severity"
+msgstr "Severite"
+
+#: src/Vulnerability.php:129
+#: front/scan.vulnerabilities.php:266
+msgid "Show details"
+msgstr "Afficher les details"
+
+#: src/TicketService.php:322
+#: front/vulnerability.form.php:285
+msgid "Solution"
+msgstr "Correctif"
+
+#: src/NessusClient.php:183
+msgid "SSL error while connecting to Nessus."
+msgstr ""
+
+#: front/scanrun.php:18
+msgid "Started at"
+msgstr ""
+
+#: front/scan.php:84
+#: front/scanrun.php:18
+msgid "Status"
+msgstr "Statut"
+
+#: front/scan.php:108
+msgid "Sync"
+msgstr ""
+
+#: front/scan.php:43
+msgid "Synchronization completed. Run #%d created."
+msgstr ""
+
+#: src/TicketService.php:320
+msgid "Synopsis"
+msgstr ""
+
+#: src/Config.php:129
+msgid "Test connection"
+msgstr ""
+
+#: src/NessusClient.php:83
+msgid "The PHP cURL extension is required."
+msgstr ""
+
+#: setup.php:57
+msgid "This plugin requires GLPI 11.0.x."
+msgstr ""
+
+#: front/vulnerability.form.php:210
+msgid "This vulnerability cannot be expanded yet. Run a new synchronization so the Nessus host ID and plugin ID are stored."
+msgstr ""
+
+#: src/Vulnerability.php:106
+#: front/scan.vulnerabilities.php:240
+msgid "Ticket"
+msgstr "Ticket"
+
+#: front/vulnerability.ticket.php:56
+msgid "Ticket creation completed for %d vulnerability(ies), with %d error(s)."
+msgstr ""
+
+#: front/vulnerability.ticket.php:53
+msgid "Ticket creation completed for %d vulnerability(ies)."
+msgstr ""
+
+#: src/Config.php:116
+msgid "Timeout (seconds)"
+msgstr ""
+
+#: src/Vulnerability.php:267
+#: front/scan.vulnerabilities.php:72
+msgid "Total current vulnerabilities: %d"
+msgstr ""
+
+#: src/NessusClient.php:175
+msgid "Unable to connect to the Nessus server. Check the URL, port and firewall."
+msgstr ""
+
+#: src/SyncService.php:31
+msgid "Unable to create scan run."
+msgstr ""
+
+#: front/scan.form.php:47
+msgid "Unable to create the scan record."
+msgstr ""
+
+#: src/TicketService.php:50
+#: src/TicketService.php:88
+msgid "Unable to create the ticket."
+msgstr ""
+
+#: src/NessusClient.php:99
+msgid "Unable to initialize the cURL session."
+msgstr ""
+
+#: src/NessusClient.php:171
+msgid "Unable to resolve the Nessus host name. Check the URL."
+msgstr ""
+
+#: src/NessusClient.php:203
+#: front/config.form.php:41
+msgid "Unexpected error while testing the Nessus connection."
+msgstr ""
+
+#: src/NessusClient.php:167
+msgid "Unknown connection error while contacting Nessus."
+msgstr ""
+
+#: src/TicketService.php:71
+#: src/TicketService.php:377
+#: src/TicketService.php:395
+#: front/scan.vulnerabilities.php:148
+#: front/vulnerability.form.php:67
+msgid "Unknown host"
+msgstr ""
+
+#: src/Config.php:78
+msgid "Unmanaged device"
+msgstr ""
+
+#: src/Vulnerability.php:309
+#: front/scan.vulnerabilities.php:269
+msgid "View"
+msgstr ""
+
+#: front/scan.php:100
+msgid "View vulnerabilities"
+msgstr "Voir les vulnerabilites"
+
+#: src/Scan.php:158
+#: src/Vulnerability.php:31
+#: front/vulnerability.php:11
+#: front/vulnerability.php:16
+msgid "Vulnerabilities"
+msgstr "Vulnerabilites"
+
+#: front/vulnerability.form.php:239
+#: front/vulnerability.form.php:268
+msgid "Vulnerability details"
+msgstr ""
+
+#: src/TicketService.php:304
+msgid "Vulnerability imported from Nessus."
+msgstr ""
+
+#: src/TicketService.php:16
+#: front/vulnerability.form.php:195
+msgid "Vulnerability not found."
+msgstr ""
+
+#: src/VulnerabilityTicket.php:22
+msgid "Vulnerability ticket link"
+msgstr ""
+
+#: front/vulnerability.php:29
+msgid "Yes"
+msgstr ""
