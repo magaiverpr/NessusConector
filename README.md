@@ -1,50 +1,18 @@
-# Nessus GLPI Plugin Skeleton
 
-Esqueleto inicial de um plugin GLPI 11.0.4 para integrar resultados do Nessus.
+# Nessus Conector
 
-## Nome interno do plugin
+  
 
-O identificador interno usado no código é `nessusglpi`.
+Esse plugin tem por objetivo conectar o Nessus com o GLPI, para sincronizar as vulnerabilidades achadas com os ativos para gerar um histórico e também criar chamados baseados em cada vulnerabilidade achada para tratamento e documentação interna.
 
-Ao instalar no GLPI, o diretório do plugin deve ter esse nome:
+## Configuração
+Para configurar o plugin, basta apenas da URL da API do Nessus, a access key e o secret key gerado para a API. Após salvar a configuração, pegue o ID de um scan feito no Nessus (encontrado na URL do Nessus, conforme print abaixo).
+<img src="/images/print3.png.png">
 
-`plugins/nessusglpi`
+Ao sincronizar o scan, ele irá buscar automaticamente os hosts baseado no seu nome ou IP cadastrado na lista de ativos do GLPI. Caso não encontre, ele também irá mostrar o nome do host, mas o encontrado pelo Nessus.
 
-## Entregue nesta etapa
 
-- estrutura base do plugin
-- hooks de instalação e desinstalação
-- tabelas iniciais do banco
-- classes principais do domínio
-- telas mínimas para configuração, scans, hosts e vulnerabilidades
-- serviços stub para sincronização e criação de tickets
 
-## Próximos passos
-
-1. Implementar o cliente HTTP real da API do Nessus.
-2. Implementar matching de assets e persistência do resultado da sincronização.
-3. Adicionar busca/listagem com colunas customizadas.
-4. Implementar criação real de tickets.
-
-## Traducoes
-
-A base de internacionalizacao do plugin fica em `locales/`.
-
-Idiomas iniciais preparados:
-- `en_GB`
-- `fr_FR`
-- `pt_BR`
-
-Para regenerar os catalogos apos alterar textos do plugin:
-
-```bash
-python tools/update_locales.py
-```
-
-O script atualiza:
-- `locales/nessusglpi.pot`
-- `locales/en_GB.po`
-- `locales/fr_FR.po`
-- `locales/pt_BR.po`
-
-Observacao: os catalogos foram iniciados como base de trabalho. Uma revisao linguistica posterior ainda e recomendada antes da publicacao.
+## Imagens
+<img src="/images/print1.png.png">
+<img src="/images/print2.png.png">
