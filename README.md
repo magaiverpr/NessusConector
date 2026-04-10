@@ -1,18 +1,16 @@
-
 # Nessus Conector
 
-  
+[en-US](README.md) / pt-BR
 
-Esse plugin tem por objetivo conectar o Nessus com o GLPI, para sincronizar as vulnerabilidades achadas com os ativos para gerar um histórico e também criar chamados baseados em cada vulnerabilidade achada para tratamento e documentação interna.
+This plugin aims to connect Nessus with GLPI to synchronize vulnerabilities found with assets, generating a history and creating tickets based on each vulnerability found for internal handling and documentation.
 
-## Configuração
-Para configurar o plugin, basta apenas da URL da API do Nessus, a access key e o secret key gerado para a API. Após salvar a configuração, pegue o ID de um scan feito no Nessus (encontrado na URL do Nessus, conforme print abaixo).
+## Configuration
+To configure the plugin, you only need the Nessus API URL, the access key, and the secret key generated for the API. After saving the configuration, retrieve the ID of a scan performed in Nessus (found in the Nessus URL, as shown in the screenshot below).
+
 <img src="/images/print3.png.png">
 
-Ao sincronizar o scan, ele irá buscar automaticamente os hosts baseado no seu nome ou IP cadastrado na lista de ativos do GLPI. Caso não encontre, ele também irá mostrar o nome do host, mas o encontrado pelo Nessus.
+When synchronizing the scan, it will automatically search for hosts based on their name or IP address registered in the GLPI asset list. If it doesn't find any, it will also show the hostname, but the one found by Nessus.
 
-
-
-## Imagens
+## Images
 <img src="/images/print1.png.png">
 <img src="/images/print2.png.png">
