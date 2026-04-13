@@ -21,6 +21,7 @@ function plugin_nessusglpi_run_install(): bool
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `name` VARCHAR(255) NOT NULL,
             `scan_id` VARCHAR(64) NOT NULL,
+            `entities_id` INT NOT NULL DEFAULT 0,
             `is_active` TINYINT(1) NOT NULL DEFAULT 1,
             `last_scan_at` TIMESTAMP NULL DEFAULT NULL,
             `last_sync_at` TIMESTAMP NULL DEFAULT NULL,
@@ -29,7 +30,8 @@ function plugin_nessusglpi_run_install(): bool
             `date_creation` TIMESTAMP NULL DEFAULT NULL,
             `date_mod` TIMESTAMP NULL DEFAULT NULL,
             PRIMARY KEY (`id`),
-            KEY `scan_id` (`scan_id`)
+            KEY `scan_id` (`scan_id`),
+            KEY `entities_id` (`entities_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
         "CREATE TABLE IF NOT EXISTS `glpi_plugin_nessusglpi_scan_runs` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -128,6 +130,8 @@ function plugin_nessusglpi_run_install(): bool
     }
 
     $upgradeQueries = [
+        "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD COLUMN `entities_id` INT NOT NULL DEFAULT 0 AFTER `scan_id`",
+        "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD KEY `entities_id` (`entities_id`)",
         "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD COLUMN `last_scan_at` TIMESTAMP NULL DEFAULT NULL AFTER `is_active`",
         "ALTER TABLE `glpi_plugin_nessusglpi_hosts` ADD COLUMN `nessus_host_id` VARCHAR(64) DEFAULT NULL AFTER `plugin_nessusglpi_scans_id`",
         "ALTER TABLE `glpi_plugin_nessusglpi_hosts` ADD KEY `nessus_host_id` (`nessus_host_id`)",

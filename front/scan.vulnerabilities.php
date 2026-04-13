@@ -15,7 +15,7 @@ if ($scanId <= 0) {
 }
 
 $scan = new GlpiPlugin\Nessusglpi\Scan();
-if (!$scan->getFromDB($scanId)) {
+if (!$scan->getFromDB($scanId) || !GlpiPlugin\Nessusglpi\Scan::canAccessScanId($scanId)) {
     Html::displayErrorAndDie(__('Scan not found.', 'nessusglpi'));
 }
 

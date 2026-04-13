@@ -22,6 +22,11 @@ Session::checkRight(Scan::$rightname, READ);
 $scan = new Scan();
 $message = null;
 $messageType = 'info';
+$currentId = (int) ($_GET['id'] ?? ($_POST['id'] ?? 0));
+
+if ($currentId > 0 && !Scan::canAccessScanId($currentId)) {
+    Html::displayRightError();
+}
 
 if (isset($_POST['add'])) {
     Session::checkRight(Scan::$rightname, CREATE);
@@ -39,8 +44,9 @@ if (isset($_POST['add'])) {
         }
 
         $newId = $scan->add([
-            'scan_id' => $scanId,
-            'name'    => $scanName,
+            'scan_id'    => $scanId,
+            'name'       => $scanName,
+            'entities_id'=> (int) Session::getActiveEntity(),
         ]);
 
         if (!$newId) {
@@ -65,11 +71,17 @@ if (isset($_POST['add'])) {
         $message = $e->getMessage();
         $messageType = 'error';
         $scan->fields['scan_id'] = (string) ($_POST['scan_id'] ?? '');
+        $scan->fields['entities_id'] = (int) Session::getActiveEntity();
     }
 }
 
 if (isset($_POST['update'])) {
     Session::checkRight(Scan::$rightname, UPDATE);
+
+    $scanRecordId = (int) ($_POST['id'] ?? 0);
+    if (!Scan::canAccessScanId($scanRecordId)) {
+        Html::displayRightError();
+    }
 
     try {
         $scanId = trim((string) ($_POST['scan_id'] ?? ''));
@@ -84,9 +96,10 @@ if (isset($_POST['update'])) {
         }
 
         $scan->update([
-            'id'      => (int) ($_POST['id'] ?? 0),
-            'scan_id' => $scanId,
-            'name'    => $scanName,
+            'id'         => $scanRecordId,
+            'scan_id'    => $scanId,
+            'name'       => $scanName,
+            'entities_id'=> (int) ($scan->fields['entities_id'] ?? 0),
         ]);
 
         Session::addMessageAfterRedirect(__('Scan updated successfully.', 'nessusglpi'));
@@ -100,7 +113,7 @@ if (isset($_POST['update'])) {
 }
 
 Html::header(__('Nessus scan', 'nessusglpi'), $_SERVER['PHP_SELF'], 'plugins', 'GlpiPlugin\\Nessusglpi\\Scan');
-$scan->showForm((int) ($_GET['id'] ?? ($_POST['id'] ?? 0)), [
+$scan->showForm($currentId, [
     'message'      => $message,
     'message_type' => $messageType,
 ]);

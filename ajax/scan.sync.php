@@ -11,6 +11,14 @@ Session::checkRight(Scan::$rightname, UPDATE);
 Html::header_nocache();
 
 $scanId  = (int) ($_POST['id'] ?? 0);
+if (!Scan::canAccessScanId($scanId)) {
+    http_response_code(403);
+    echo json_encode([
+        'ok'      => false,
+        'message' => __('You do not have permission to access this scan.', 'nessusglpi'),
+    ], JSON_THROW_ON_ERROR);
+    exit;
+}
 $service = new SyncService();
 
 try {

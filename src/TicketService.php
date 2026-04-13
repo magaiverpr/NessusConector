@@ -38,7 +38,7 @@ class TicketService
             'type'    => 1,
         ];
 
-        $entityId = $this->resolveTicketEntityId((string) ($vulnerability->fields['itemtype'] ?? ''), (int) ($vulnerability->fields['items_id'] ?? 0));
+        $entityId = $this->resolveTicketEntityId($scan?->fields ?? null, (string) ($vulnerability->fields['itemtype'] ?? ''), (int) ($vulnerability->fields['items_id'] ?? 0));
         if ($entityId !== null) {
             $ticketInput['entities_id'] = $entityId;
         }
@@ -68,6 +68,8 @@ class TicketService
             return $existingTicketId;
         }
 
+        $scan = $this->loadScan((int) ($host->fields['plugin_nessusglpi_scans_id'] ?? 0));
+
         $label = (string) ($host->fields['fqdn'] ?: $host->fields['hostname'] ?: $host->fields['ip'] ?: __('Unknown host', 'nessusglpi'));
         $ticketInput = [
             'name'    => sprintf(__('[Nessus] Pending host: %s', 'nessusglpi'), $label),
@@ -76,7 +78,7 @@ class TicketService
             'type'    => 1,
         ];
 
-        $entityId = $this->resolveTicketEntityId((string) ($host->fields['itemtype'] ?? ''), (int) ($host->fields['items_id'] ?? 0));
+        $entityId = $this->resolveTicketEntityId($scan?->fields ?? null, (string) ($host->fields['itemtype'] ?? ''), (int) ($host->fields['items_id'] ?? 0));
         if ($entityId !== null) {
             $ticketInput['entities_id'] = $entityId;
         }
@@ -221,8 +223,13 @@ class TicketService
         return null;
     }
 
-    private function resolveTicketEntityId(string $itemtype, int $itemsId): ?int
+    private function resolveTicketEntityId(?array $scanFields, string $itemtype, int $itemsId): ?int
     {
+        $scanEntityId = $scanFields['entities_id'] ?? null;
+        if ($scanEntityId !== null && $scanEntityId !== '') {
+            return (int) $scanEntityId;
+        }
+
         $entityId = $this->getLinkedItemEntityId($itemtype, $itemsId);
         if ($entityId !== null) {
             return $entityId;

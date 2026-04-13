@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GlpiPlugin\Nessusglpi;
 
 use CommonDBTM;
+use Dropdown;
 use Html;
 use Session;
 use function array_filter;
@@ -42,11 +43,78 @@ class Scan extends CommonDBTM
         return Session::haveRight(static::$rightname, UPDATE) > 0;
     }
 
+    public static function getVisibleEntityIds(): array
+    {
+        $entities = [];
+
+        if (method_exists(Session::class, 'getActiveEntities')) {
+            $entities = array_map('intval', (array) Session::getActiveEntities());
+        }
+
+        if ($entities === [] && method_exists(Session::class, 'getActiveEntity')) {
+            $activeEntity = (int) Session::getActiveEntity();
+            if ($activeEntity > 0) {
+                $entities[] = $activeEntity;
+            }
+        }
+
+        return array_values(array_unique(array_filter($entities, static fn (int $id): bool => $id >= 0)));
+    }
+
+    public static function getVisibleScansCriteria(): array
+    {
+        $entityIds = static::getVisibleEntityIds();
+        if ($entityIds === []) {
+            return ['id' => 0];
+        }
+
+        return [
+            'entities_id' => $entityIds,
+        ];
+    }
+
+    public static function canAccessScanId(int $scanId): bool
+    {
+        if ($scanId <= 0) {
+            return false;
+        }
+
+        $scan = new self();
+        if (!$scan->getFromDB($scanId)) {
+            return false;
+        }
+
+        return in_array((int) ($scan->fields['entities_id'] ?? -1), static::getVisibleEntityIds(), true);
+    }
+
     public static function deleteByIds(array $ids): int
     {
         global $DB;
 
+        $visibleEntityIds = static::getVisibleEntityIds();
         $ids = array_values(array_filter(array_map('intval', $ids), static fn (int $id): bool => $id > 0));
+        if ($ids === [] || $visibleEntityIds === []) {
+            return 0;
+        }
+
+        $allowedIds = [];
+        $allowedIterator = $DB->request([
+            'SELECT' => ['id'],
+            'FROM'   => static::getTable(),
+            'WHERE'  => [
+                'id'          => $ids,
+                'entities_id' => $visibleEntityIds,
+            ],
+        ]);
+
+        foreach ($allowedIterator as $row) {
+            $scanId = (int) ($row['id'] ?? 0);
+            if ($scanId > 0) {
+                $allowedIds[] = $scanId;
+            }
+        }
+
+        $ids = array_values(array_unique($allowedIds));
         if ($ids === []) {
             return 0;
         }
@@ -192,6 +260,14 @@ class Scan extends CommonDBTM
 
         $message = $options['message'] ?? null;
         $messageType = $options['message_type'] ?? 'info';
+        $entityName = '-';
+        $entityId = (int) ($this->fields['entities_id'] ?? Session::getActiveEntity());
+        if ($entityId >= 0) {
+            $entityName = Dropdown::getDropdownName('glpi_entities', $entityId);
+            if ($entityName === '') {
+                $entityName = (string) $entityId;
+            }
+        }
 
         echo "<form method='post' action='" . static::getFormURL() . "'>";
         echo "<div class='card card-body'>";
@@ -203,6 +279,7 @@ class Scan extends CommonDBTM
         }
 
         echo "<table class='tab_cadre_fixe'>";
+        echo "<tr><th>" . __('Entity') . "</th><td>" . Html::cleanInputText((string) $entityName) . "</td></tr>";
         echo "<tr><th>" . __('Scan ID', 'nessusglpi') . "</th><td><input type='text' name='scan_id' value='" . Html::cleanInputText($this->fields['scan_id'] ?? '') . "' class='form-control'></td></tr>";
 
         if (!$this->isNewID($ID)) {
@@ -212,6 +289,7 @@ class Scan extends CommonDBTM
         echo '</table>';
         echo "<div class='mt-3'>";
         echo Html::hidden('id', ['value' => $this->fields['id'] ?? 0]);
+        echo Html::hidden('entities_id', ['value' => $entityId]);
         echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
 
         if ($this->isNewID($ID)) {
@@ -229,19 +307,21 @@ class Scan extends CommonDBTM
 
     public function prepareInputForAdd($input): array
     {
-        $input['is_active']     = 1;
-        $input['date_creation'] = date('Y-m-d H:i:s');
-        $input['date_mod']      = date('Y-m-d H:i:s');
-        $input['comment']       = null;
+        $input['entities_id']    = (int) ($input['entities_id'] ?? Session::getActiveEntity());
+        $input['is_active']      = 1;
+        $input['date_creation']  = date('Y-m-d H:i:s');
+        $input['date_mod']       = date('Y-m-d H:i:s');
+        $input['comment']        = null;
 
         return $input;
     }
 
     public function prepareInputForUpdate($input): array
     {
-        $input['is_active'] = (int) ($this->fields['is_active'] ?? 1);
-        $input['date_mod']  = date('Y-m-d H:i:s');
-        $input['comment']   = $this->fields['comment'] ?? null;
+        $input['entities_id'] = (int) ($this->fields['entities_id'] ?? Session::getActiveEntity());
+        $input['is_active']   = (int) ($this->fields['is_active'] ?? 1);
+        $input['date_mod']    = date('Y-m-d H:i:s');
+        $input['comment']     = $this->fields['comment'] ?? null;
 
         return $input;
     }

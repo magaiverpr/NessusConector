@@ -36,8 +36,13 @@ if (isset($_POST['delete_selected_scans'])) {
 if (isset($_POST['sync_scan'])) {
     Session::checkRight(Scan::$rightname, UPDATE);
 
+    $scanId = (int) ($_POST['id'] ?? 0);
+    if (!Scan::canAccessScanId($scanId)) {
+        Html::displayRightError();
+    }
+
     try {
-        $runId = (new SyncService())->runScan((int) ($_POST['id'] ?? 0));
+        $runId = (new SyncService())->runScan($scanId);
         $syncResult = [
             'ok'      => true,
             'message' => sprintf(__('Synchronization completed. Run #%d created.', 'nessusglpi'), $runId),
@@ -56,6 +61,7 @@ global $DB;
 
 $config = Config::getSingleton();
 $nessusBaseUrl = rtrim((string) ($config->fields['api_url'] ?? ''), '/');
+$entityCriteria = Scan::getVisibleScansCriteria();
 
 echo "<div class='card card-body'>";
 echo "<h2>" . __('Nessus scans', 'nessusglpi') . "</h2>";
@@ -81,15 +87,17 @@ echo "<div style='margin-bottom: 12px;'>";
 echo '<button type="submit" form="' . $bulkFormId . '" name="delete_selected_scans" value="1" class="btn btn-outline-danger" onclick="return confirm(\'' . $deleteConfirm . '\');">' . Html::cleanInputText(__('Delete selected', 'nessusglpi')) . '</button>';
 echo "</div>";
 echo "<table class='tab_cadre_fixehov'>";
-echo "<tr><th><input type='checkbox' onclick=\"document.querySelectorAll('input[name=\'scan_ids[]\']').forEach(cb => cb.checked = this.checked);\"></th><th>ID</th><th>" . __('Name') . "</th><th>" . __('Scan ID', 'nessusglpi') . "</th><th>" . __('Scan executed at', 'nessusglpi') . "</th><th>" . __('Last synchronization', 'nessusglpi') . "</th><th>" . __('Status') . "</th><th>" . __('Actions') . "</th></tr>";
+echo "<tr><th><input type='checkbox' onclick=\"document.querySelectorAll('input[name=\'scan_ids[]\']').forEach(cb => cb.checked = this.checked);\"></th><th>ID</th><th>" . __('Entity') . "</th><th>" . __('Name') . "</th><th>" . __('Scan ID', 'nessusglpi') . "</th><th>" . __('Scan executed at', 'nessusglpi') . "</th><th>" . __('Last synchronization', 'nessusglpi') . "</th><th>" . __('Status') . "</th><th>" . __('Actions') . "</th></tr>";
 
 foreach ($DB->request([
     'FROM'  => 'glpi_plugin_nessusglpi_scans',
+    'WHERE' => $entityCriteria,
     'ORDER' => ['id DESC'],
 ]) as $row) {
     echo "<tr>";
     echo "<td><input type='checkbox' name='scan_ids[]' value='" . (int) $row['id'] . "' form='" . $bulkFormId . "'></td>";
     echo "<td>" . (int) $row['id'] . "</td>";
+    echo "<td>" . Html::cleanInputText(Dropdown::getDropdownName('glpi_entities', (int) ($row['entities_id'] ?? 0))) . "</td>";
     echo "<td>" . htmlspecialchars((string) ($row['name'] ?? ''), ENT_QUOTES) . "</td>";
     echo "<td>" . htmlspecialchars((string) ($row['scan_id'] ?? ''), ENT_QUOTES) . "</td>";
     echo "<td>" . htmlspecialchars((string) ($row['last_scan_at'] ?? '-'), ENT_QUOTES) . "</td>";
