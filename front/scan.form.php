@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use GlpiPlugin\Nessusglpi\NessusClient;
 use GlpiPlugin\Nessusglpi\Scan;
-use GlpiPlugin\Nessusglpi\SyncService;
+use GlpiPlugin\Nessusglpi\SyncJobService;
 
 include('../../../inc/includes.php');
 
@@ -32,10 +32,14 @@ if (isset($_POST['add'])) {
     Session::checkRight(Scan::$rightname, CREATE);
 
     try {
+        global $DB;
+
         $scanId = trim((string) ($_POST['scan_id'] ?? ''));
         if ($scanId === '') {
             throw new RuntimeException(__('Scan ID is required.', 'nessusglpi'));
         }
+
+        $encodedImportSeverities = Scan::encodeImportSeverities($_POST['import_severities'] ?? []);
 
         $scanDetails = (new NessusClient())->getScanDetails($scanId);
         $scanName = trim((string) ($scanDetails['info']['name'] ?? $scanDetails['name'] ?? ''));
@@ -44,27 +48,29 @@ if (isset($_POST['add'])) {
         }
 
         $newId = $scan->add([
-            'scan_id'    => $scanId,
-            'name'       => $scanName,
-            'entities_id'=> (int) Session::getActiveEntity(),
+            'scan_id'           => $scanId,
+            'name'              => $scanName,
+            'entities_id'       => (int) Session::getActiveEntity(),
+            'import_severities' => $encodedImportSeverities,
         ]);
 
         if (!$newId) {
             throw new RuntimeException(__('Unable to create the scan record.', 'nessusglpi'));
         }
 
-        try {
-            (new SyncService())->runScan((int) $newId);
-            Session::addMessageAfterRedirect(__('Scan created and initial synchronization completed successfully.', 'nessusglpi'));
-        } catch (Throwable $syncException) {
-            Session::addMessageAfterRedirect(
-                sprintf(
-                    __('Scan created successfully, but the initial synchronization failed: %s', 'nessusglpi'),
-                    $syncException->getMessage()
-                ),
-                true
-            );
-        }
+        $DB->update(Scan::getTable(), [
+            'import_severities' => $encodedImportSeverities,
+        ], [
+            'id' => (int) $newId,
+        ]);
+
+        $jobId = (new SyncJobService())->queueScan((int) $newId);
+        Session::addMessageAfterRedirect(
+            sprintf(
+                __('Scan created successfully. Initial synchronization queued as job #%d.', 'nessusglpi'),
+                $jobId
+            )
+        );
 
         nessusglpi_redirect_to_scan_list();
     } catch (Throwable $e) {
@@ -72,22 +78,27 @@ if (isset($_POST['add'])) {
         $messageType = 'error';
         $scan->fields['scan_id'] = (string) ($_POST['scan_id'] ?? '');
         $scan->fields['entities_id'] = (int) Session::getActiveEntity();
+        $scan->fields['import_severities'] = Scan::encodeImportSeverities($_POST['import_severities'] ?? []);
     }
 }
 
 if (isset($_POST['update'])) {
     Session::checkRight(Scan::$rightname, UPDATE);
 
-    $scanRecordId = (int) ($_POST['id'] ?? 0);
-    if (!Scan::canAccessScanId($scanRecordId)) {
-        Html::displayRightError();
-    }
-
     try {
+        global $DB;
+
+        $scanRecordId = (int) ($_POST['id'] ?? 0);
+        if (!Scan::canAccessScanId($scanRecordId)) {
+            Html::displayRightError();
+        }
+
         $scanId = trim((string) ($_POST['scan_id'] ?? ''));
         if ($scanId === '') {
             throw new RuntimeException(__('Scan ID is required.', 'nessusglpi'));
         }
+
+        $encodedImportSeverities = Scan::encodeImportSeverities($_POST['import_severities'] ?? []);
 
         $scanDetails = (new NessusClient())->getScanDetails($scanId);
         $scanName = trim((string) ($scanDetails['info']['name'] ?? $scanDetails['name'] ?? ''));
@@ -96,10 +107,20 @@ if (isset($_POST['update'])) {
         }
 
         $scan->update([
-            'id'         => $scanRecordId,
-            'scan_id'    => $scanId,
-            'name'       => $scanName,
-            'entities_id'=> (int) ($scan->fields['entities_id'] ?? 0),
+            'id'                => $scanRecordId,
+            'scan_id'           => $scanId,
+            'name'              => $scanName,
+            'entities_id'       => (int) Session::getActiveEntity(),
+            'import_severities' => $encodedImportSeverities,
+        ]);
+
+        $DB->update(Scan::getTable(), [
+            'scan_id'           => $scanId,
+            'name'              => $scanName,
+            'entities_id'       => (int) Session::getActiveEntity(),
+            'import_severities' => $encodedImportSeverities,
+        ], [
+            'id' => $scanRecordId,
         ]);
 
         Session::addMessageAfterRedirect(__('Scan updated successfully.', 'nessusglpi'));
@@ -109,6 +130,8 @@ if (isset($_POST['update'])) {
         $messageType = 'error';
         $scan->fields['id'] = (int) ($_POST['id'] ?? 0);
         $scan->fields['scan_id'] = (string) ($_POST['scan_id'] ?? '');
+        $scan->fields['entities_id'] = (int) Session::getActiveEntity();
+        $scan->fields['import_severities'] = Scan::encodeImportSeverities($_POST['import_severities'] ?? []);
     }
 }
 

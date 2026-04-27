@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use GlpiPlugin\Nessusglpi\Scan;
-use GlpiPlugin\Nessusglpi\SyncService;
+use GlpiPlugin\Nessusglpi\SyncJobService;
 
 include('../../../inc/includes.php');
 
 Session::checkRight(Scan::$rightname, UPDATE);
 Html::header_nocache();
 
-$scanId  = (int) ($_POST['id'] ?? 0);
+$scanId = (int) ($_POST['id'] ?? 0);
 if (!Scan::canAccessScanId($scanId)) {
     http_response_code(403);
     echo json_encode([
@@ -19,13 +19,14 @@ if (!Scan::canAccessScanId($scanId)) {
     ], JSON_THROW_ON_ERROR);
     exit;
 }
-$service = new SyncService();
+
+$service = new SyncJobService();
 
 try {
-    $runId = $service->runScan($scanId);
+    $jobId = $service->queueScan($scanId);
     echo json_encode([
         'ok'     => true,
-        'run_id' => $runId,
+        'job_id' => $jobId,
     ], JSON_THROW_ON_ERROR);
 } catch (Throwable $e) {
     http_response_code(400);

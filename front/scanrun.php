@@ -34,7 +34,7 @@ $iterator = $DB->request([
             ],
         ],
     ],
-    'WHERE' => Scan::getVisibleScansCriteria(),
+    'WHERE' => Scan::getVisibleScansCriteria('glpi_plugin_nessusglpi_scans.entities_id'),
     'ORDER' => ['glpi_plugin_nessusglpi_scan_runs.id DESC'],
 ]);
 

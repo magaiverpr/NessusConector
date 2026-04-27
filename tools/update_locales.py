@@ -85,6 +85,7 @@ def main():
         'Nessus scan run': 'Execucao de scan do Nessus',
         'Latest synchronization': 'Ultima sincronizacao',
         'Create ticket': 'Criar chamado',
+        'Create grouped tickets': 'Criar chamados agrupados',
         'Open new ticket': 'Abrir novo chamado',
         'Show details': 'Mostrar detalhes',
         'Open in Nessus': 'Abrir no Nessus',
@@ -102,6 +103,12 @@ def main():
         'Description': 'Descricao',
         'Overview': 'Visao geral',
         'Outputs': 'Saidas',
+        'Affected assets': 'Ativos afetados',
+        'Multiple assets (%d)': 'Multiplos ativos (%d)',
+        'No vulnerabilities were selected.': 'Nenhuma vulnerabilidade foi selecionada.',
+        'Ticket creation completed for %d grouped vulnerability group(s).': 'Criacao de chamados concluida para %d grupo(s) de vulnerabilidade.',
+        'Ticket creation completed for %d grouped vulnerability group(s), with %d error(s).': 'Criacao de chamados concluida para %d grupo(s) de vulnerabilidade, com %d erro(s).',
+        'Vulnerability imported from Nessus affecting multiple assets.': 'Vulnerabilidade importada do Nessus afetando multiplos ativos.',
     }
 
     fr_fr = {
@@ -116,6 +123,7 @@ def main():
         'Nessus scan run': 'Execution du scan Nessus',
         'Latest synchronization': 'Derniere synchronisation',
         'Create ticket': 'Creer un ticket',
+        'Create grouped tickets': 'Creer des tickets groupes',
         'Open new ticket': 'Ouvrir un nouveau ticket',
         'Show details': 'Afficher les details',
         'Open in Nessus': 'Ouvrir dans Nessus',
@@ -133,6 +141,12 @@ def main():
         'Description': 'Description',
         'Overview': 'Vue d ensemble',
         'Outputs': 'Sorties',
+        'Affected assets': 'Actifs affectes',
+        'Multiple assets (%d)': 'Actifs multiples (%d)',
+        'No vulnerabilities were selected.': 'Aucune vulnerabilite n a ete selectionnee.',
+        'Ticket creation completed for %d grouped vulnerability group(s).': 'Creation terminee pour %d groupe(s) de vulnerabilites.',
+        'Ticket creation completed for %d grouped vulnerability group(s), with %d error(s).': 'Creation terminee pour %d groupe(s) de vulnerabilites, avec %d erreur(s).',
+        'Vulnerability imported from Nessus affecting multiple assets.': 'Vulnerabilite importee depuis Nessus affectant plusieurs actifs.',
     }
 
     pot = render_catalog(messages, 'en_GB', 'English (United Kingdom)', {msgid: '' for msgid in messages})
@@ -148,3 +162,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

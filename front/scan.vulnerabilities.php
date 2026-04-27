@@ -232,9 +232,10 @@ if ($rows === []) {
     echo '<form id="' . $bulkFormId . '" method="post" action="vulnerability.ticket.php">';
     echo Html::hidden('_glpi_csrf_token', ['value' => Session::getNewCSRFToken()]);
     echo '</form>';
-    echo '<div style="margin-bottom: 12px; display:flex; gap:10px; align-items:center;">';
+    echo '<div style="margin-bottom: 12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">';
     echo '<label style="display:flex; align-items:center; gap:8px; margin:0;"><input type="checkbox" onclick="document.querySelectorAll(\'.nessusglpi-vuln-checkbox\').forEach(function(el){el.checked=this.checked;}.bind(this))">' . Html::cleanInputText(__('Select all', 'nessusglpi')) . '</label>';
     echo '<button type="submit" form="' . $bulkFormId . '" class="btn btn-primary btn-sm" name="create_selected_tickets" value="1">' . Html::cleanInputText(__('Create selected tickets', 'nessusglpi')) . '</button>';
+    echo '<button type="submit" form="' . $bulkFormId . '" class="btn btn-outline-primary btn-sm" name="create_grouped_tickets" value="1">' . Html::cleanInputText(__('Create grouped tickets', 'nessusglpi')) . '</button>';
     echo '</div>';
     echo '<table class="tab_cadre_fixehov">';
     echo '<tr><th style="width:40px;"></th><th>' . __('Severity', 'nessusglpi') . '</th><th>' . __('Name') . '</th><th>' . __('Host', 'nessusglpi') . '</th><th>' . __('Ticket') . '</th><th>' . __('Actions') . '</th></tr>';
@@ -291,3 +292,4 @@ if ($rows === []) {
 
 echo '</div>';
 Html::footer();
+

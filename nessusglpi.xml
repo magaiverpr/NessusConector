@@ -23,7 +23,7 @@
 </authors>
 <versions>
 <version>
-<num>1.0</num>
+<num>1.1.0</num>
 <compatibility>~11.0.0</compatibility>
 <download_url>https://github.com/magaiverpr/NessusConector/releases</download_url>
 </version>
@@ -39,7 +39,7 @@
 <tag>Nessus</tag>
 </en>
 <lang>
-<tag>tag1</tag>
+<tag>API</tag>
 </lang>
 </tags>
 <screenshots>

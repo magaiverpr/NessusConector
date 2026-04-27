@@ -48,11 +48,15 @@ class SyncService
                     'last_scan_at' => $scanExecutedAt,
                 ]);
             }
+
             $matcher = new AssetMatcher();
             $allowedItemtypes = Config::getAllowedItemtypes();
+            $allowedSeverities = $this->loadAllowedSeveritiesForScan($scanId, $scan->fields['import_severities'] ?? null);
             $importedHosts = 0;
             $importedVulnerabilities = 0;
             $staleMarkedTargets = [];
+            $seenHosts = [];
+            $seenVulnerabilities = [];
 
             foreach ($hosts as $hostData) {
                 if (!is_array($hostData)) {
@@ -67,6 +71,14 @@ class SyncService
                 $normalizedHost = $this->normalizeHost($hostData, $detailedHostData);
                 if ($normalizedHost['hostname'] === '' && $normalizedHost['ip'] === '') {
                     continue;
+                }
+
+                $seenHostKey = $this->buildSeenHostKey($hostId, $normalizedHost);
+                if ($seenHostKey !== '' && isset($seenHosts[$seenHostKey])) {
+                    continue;
+                }
+                if ($seenHostKey !== '') {
+                    $seenHosts[$seenHostKey] = true;
                 }
 
                 $match = $matcher->findMatch($normalizedHost, $allowedItemtypes);
@@ -96,6 +108,16 @@ class SyncService
                         $match
                     );
 
+                    if (!$this->isSeverityAllowed((int) $normalizedVulnerability['severity'], $allowedSeverities)) {
+                        continue;
+                    }
+
+                    $seenVulnerabilityKey = (int) $hostDbId . ':' . (string) $normalizedVulnerability['vuln_key'];
+                    if (isset($seenVulnerabilities[$seenVulnerabilityKey])) {
+                        continue;
+                    }
+                    $seenVulnerabilities[$seenVulnerabilityKey] = true;
+
                     $vulnerability = new Vulnerability();
                     if ($vulnerability->add($normalizedVulnerability)) {
                         $importedVulnerabilities++;
@@ -103,14 +125,17 @@ class SyncService
                 }
             }
 
+            $this->markDisallowedCurrentVulnerabilitiesAsStale($scanId, $allowedSeverities);
+            $currentVulnerabilityCount = $this->countCurrentVulnerabilitiesForScan($scanId);
+
             $finishedAt = date('Y-m-d H:i:s');
             $scanRun->update([
                 'id'                    => $runId,
                 'finished_at'           => $finishedAt,
                 'status'                => 'success',
                 'hosts_found'           => $importedHosts,
-                'vulnerabilities_found' => $importedVulnerabilities,
-                'message'               => sprintf(__('Imported %d host(s) and %d vulnerability entries.', 'nessusglpi'), $importedHosts, $importedVulnerabilities),
+                'vulnerabilities_found' => $currentVulnerabilityCount,
+                'message'               => sprintf(__('Imported %d host(s) and %d vulnerability entries.', 'nessusglpi'), $importedHosts, $currentVulnerabilityCount),
             ]);
 
             $scan->update([
@@ -275,6 +300,15 @@ class SyncService
         ];
     }
 
+    private function buildSeenHostKey(?int $nessusHostId, array $normalizedHost): string
+    {
+        if ($nessusHostId !== null && $nessusHostId > 0) {
+            return 'nessus:' . $nessusHostId;
+        }
+
+        return $this->buildHostIdentity($normalizedHost);
+    }
+
     private function extractVulnerabilities(array $detailedHostData): array
     {
         $vulnerabilities = $detailedHostData['vulnerabilities'] ?? null;
@@ -329,7 +363,7 @@ class SyncService
     private function mapSeverityLabel(int $severity, string $label): string
     {
         $trimmed = trim($label);
-        if ($trimmed !== '') {
+        if ($trimmed !== '' && !ctype_digit($trimmed)) {
             return $trimmed;
         }
 
@@ -589,4 +623,68 @@ class SyncService
 
         return '';
     }
+
+    private function loadAllowedSeveritiesForScan(int $scanId, $fallbackRaw): array
+    {
+        global $DB;
+
+        $row = $DB->request([
+            'SELECT' => ['import_severities'],
+            'FROM'   => Scan::getTable(),
+            'WHERE'  => [
+                'id' => $scanId,
+            ],
+            'LIMIT'  => 1,
+        ])->current();
+
+        return Scan::decodeImportSeverities($row['import_severities'] ?? $fallbackRaw);
+    }
+
+    private function isSeverityAllowed(int $severity, array $allowedSeverities): bool
+    {
+        return in_array($severity, $allowedSeverities, true);
+    }
+
+    private function markDisallowedCurrentVulnerabilitiesAsStale(int $scanId, array $allowedSeverities): void
+    {
+        global $DB;
+
+        $allSeverities = array_keys(Scan::getSeverityOptions());
+        $disallowedSeverities = array_values(array_diff($allSeverities, $allowedSeverities));
+        if ($disallowedSeverities === []) {
+            return;
+        }
+
+        foreach ($disallowedSeverities as $severity) {
+            $DB->update(Vulnerability::getTable(), [
+                'is_current' => 0,
+            ], [
+                'plugin_nessusglpi_scans_id' => $scanId,
+                'is_current'                 => 1,
+                'severity'                   => (int) $severity,
+            ]);
+        }
+    }
+
+    private function countCurrentVulnerabilitiesForScan(int $scanId): int
+    {
+        global $DB;
+
+        $count = 0;
+        $iterator = $DB->request([
+            'SELECT' => ['id'],
+            'FROM'   => Vulnerability::getTable(),
+            'WHERE'  => [
+                'plugin_nessusglpi_scans_id' => $scanId,
+                'is_current'                 => 1,
+            ],
+        ]);
+
+        foreach ($iterator as $_row) {
+            $count++;
+        }
+
+        return $count;
+    }
 }
+

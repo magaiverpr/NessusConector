@@ -43,6 +43,63 @@ class Scan extends CommonDBTM
         return Session::haveRight(static::$rightname, UPDATE) > 0;
     }
 
+    public static function getSeverityOptions(): array
+    {
+        return [
+            4 => 'Critical',
+            3 => 'High',
+            2 => 'Medium',
+            1 => 'Low',
+            0 => 'Info',
+        ];
+    }
+
+    public static function normalizeImportSeverities($severities): array
+    {
+        if (is_string($severities)) {
+            $trimmed = trim($severities);
+            if ($trimmed !== '') {
+                $decoded = json_decode($trimmed, true);
+                if (is_array($decoded)) {
+                    $severities = $decoded;
+                } else {
+                    $severities = array_map('trim', explode(',', $trimmed));
+                }
+            }
+        }
+
+        $values = array_map('intval', (array) $severities);
+        $values = array_values(array_unique(array_filter($values, static fn (int $severity): bool => array_key_exists($severity, static::getSeverityOptions()))));
+        rsort($values);
+
+        if ($values === []) {
+            return array_keys(static::getSeverityOptions());
+        }
+
+        return $values;
+    }
+
+    public static function encodeImportSeverities($severities): string
+    {
+        return json_encode(static::normalizeImportSeverities($severities), JSON_THROW_ON_ERROR);
+    }
+
+    public static function decodeImportSeverities($rawValue): array
+    {
+        if (is_array($rawValue)) {
+            return static::normalizeImportSeverities($rawValue);
+        }
+
+        if (is_string($rawValue) && trim($rawValue) !== '') {
+            $decoded = json_decode($rawValue, true);
+            if (is_array($decoded)) {
+                return static::normalizeImportSeverities($decoded);
+            }
+        }
+
+        return array_keys(static::getSeverityOptions());
+    }
+
     public static function getVisibleEntityIds(): array
     {
         $entities = [];
@@ -61,7 +118,7 @@ class Scan extends CommonDBTM
         return array_values(array_unique(array_filter($entities, static fn (int $id): bool => $id >= 0)));
     }
 
-    public static function getVisibleScansCriteria(): array
+    public static function getVisibleScansCriteria(string $field = 'entities_id'): array
     {
         $entityIds = static::getVisibleEntityIds();
         if ($entityIds === []) {
@@ -69,7 +126,7 @@ class Scan extends CommonDBTM
         }
 
         return [
-            'entities_id' => $entityIds,
+            $field => $entityIds,
         ];
     }
 
@@ -268,6 +325,7 @@ class Scan extends CommonDBTM
                 $entityName = (string) $entityId;
             }
         }
+        $selectedSeverities = static::decodeImportSeverities($this->fields['import_severities'] ?? null);
 
         echo "<form method='post' action='" . static::getFormURL() . "'>";
         echo "<div class='card card-body'>";
@@ -281,6 +339,16 @@ class Scan extends CommonDBTM
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr><th>" . __('Entity') . "</th><td>" . Html::cleanInputText((string) $entityName) . "</td></tr>";
         echo "<tr><th>" . __('Scan ID', 'nessusglpi') . "</th><td><input type='text' name='scan_id' value='" . Html::cleanInputText($this->fields['scan_id'] ?? '') . "' class='form-control'></td></tr>";
+        echo "<tr><th>" . __('Imported severities', 'nessusglpi') . "</th><td>";
+        foreach (static::getSeverityOptions() as $severity => $label) {
+            $checked = in_array($severity, $selectedSeverities, true) ? ' checked' : '';
+            echo "<label style='display:inline-flex; align-items:center; gap:6px; margin-right:16px; margin-bottom:6px;'>";
+            echo "<input type='checkbox' name='import_severities[]' value='" . (int) $severity . "'" . $checked . ">";
+            echo Html::cleanInputText($label);
+            echo "</label>";
+        }
+        echo "<div style='margin-top:6px; color:#667085; font-size:12px;'>" . Html::cleanInputText(__('Choose which severities will be imported during synchronization.', 'nessusglpi')) . "</div>";
+        echo "</td></tr>";
 
         if (!$this->isNewID($ID)) {
             echo "<tr><th>" . __('Name') . "</th><td>" . Html::cleanInputText($this->fields['name'] ?? '') . "</td></tr>";
@@ -307,22 +375,30 @@ class Scan extends CommonDBTM
 
     public function prepareInputForAdd($input): array
     {
-        $input['entities_id']    = (int) ($input['entities_id'] ?? Session::getActiveEntity());
-        $input['is_active']      = 1;
-        $input['date_creation']  = date('Y-m-d H:i:s');
-        $input['date_mod']       = date('Y-m-d H:i:s');
-        $input['comment']        = null;
+        $input['entities_id']       = (int) ($input['entities_id'] ?? Session::getActiveEntity());
+        $input['import_severities'] = array_key_exists('import_severities', $input)
+            ? static::encodeImportSeverities($input['import_severities'])
+            : static::encodeImportSeverities($this->fields['import_severities'] ?? null);
+        $input['is_active']         = 1;
+        $input['date_creation']     = date('Y-m-d H:i:s');
+        $input['date_mod']          = date('Y-m-d H:i:s');
+        $input['comment']           = null;
 
         return $input;
     }
 
     public function prepareInputForUpdate($input): array
     {
-        $input['entities_id'] = (int) ($this->fields['entities_id'] ?? Session::getActiveEntity());
-        $input['is_active']   = (int) ($this->fields['is_active'] ?? 1);
-        $input['date_mod']    = date('Y-m-d H:i:s');
-        $input['comment']     = $this->fields['comment'] ?? null;
+        $input['entities_id']       = (int) ($input['entities_id'] ?? $this->fields['entities_id'] ?? Session::getActiveEntity());
+        $input['import_severities'] = array_key_exists('import_severities', $input)
+            ? static::encodeImportSeverities($input['import_severities'])
+            : (string) ($this->fields['import_severities'] ?? static::encodeImportSeverities(null));
+        $input['is_active']         = (int) ($input['is_active'] ?? $this->fields['is_active'] ?? 1);
+        $input['date_mod']          = date('Y-m-d H:i:s');
+        $input['comment']           = $input['comment'] ?? $this->fields['comment'] ?? null;
 
         return $input;
     }
 }
+
+
