@@ -7,7 +7,7 @@ use GlpiPlugin\Nessusglpi\Profile as NessusProfile;
 use GlpiPlugin\Nessusglpi\Scan;
 use GlpiPlugin\Nessusglpi\Vulnerability;
 
-define('PLUGIN_NESSUSGLPI_VERSION', '1.1.0');
+define('PLUGIN_NESSUSGLPI_VERSION', '1.2.0');
 
 function plugin_init_nessusglpi(): void
 {
