@@ -8,6 +8,7 @@ function plugin_nessusglpi_run_uninstall(): void
 
     $tables = [
         'glpi_plugin_nessusglpi_logs',
+        'glpi_plugin_nessusglpi_ticket_memory',
         'glpi_plugin_nessusglpi_host_tickets',
         'glpi_plugin_nessusglpi_vulnerability_tickets',
         'glpi_plugin_nessusglpi_vulnerabilities',

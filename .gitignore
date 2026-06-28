@@ -1,0 +1,21 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Internal working documents (not for distribution)
+TODO.md
+
+# PHP / test artifacts
+vendor/
+composer.lock
+.phpunit.result.cache
+phpunit.xml
+
+# Packaged archives
+*.7z
+*.zip
+*.tar.gz

@@ -1,0 +1,189 @@
+/*
+ * Nessus — pagina de Tendencias de vulnerabilidades.
+ * Identidade azul (midnight -> primary), cores literais para ser auto-contido.
+ */
+
+.ng-trends { padding: 0; background: transparent; border: 0; }
+
+.ng-trends * { box-sizing: border-box; }
+
+/* ---------- Hero ---------- */
+.ng-trends__hero {
+   position: relative;
+   overflow: hidden;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 1rem;
+   flex-wrap: wrap;
+   padding: 1.4rem 1.6rem;
+   margin-bottom: 1.1rem;
+   border-radius: 16px;
+   background: linear-gradient(120deg, #041e42 0%, #0a3a6b 52%, #0087f5 100%);
+   color: #fff;
+   box-shadow: 0 18px 42px -18px rgba(4, 30, 66, .55);
+}
+.ng-trends__hero::after {
+   content: "";
+   position: absolute;
+   top: -55%;
+   right: -8%;
+   width: 360px;
+   height: 360px;
+   background: radial-gradient(circle, rgba(38, 255, 147, .18), transparent 62%);
+   pointer-events: none;
+}
+.ng-trends__brand { display: flex; align-items: center; gap: .9rem; min-width: 0; }
+.ng-trends__logo {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   width: 46px; height: 46px;
+   border-radius: 13px;
+   background: rgba(255, 255, 255, .14);
+   border: 1px solid rgba(255, 255, 255, .28);
+   font-size: 1.5rem;
+}
+.ng-trends__eyebrow {
+   display: inline-block;
+   font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+   color: rgba(255, 255, 255, .85);
+}
+.ng-trends__hero h2 { margin: .1rem 0 0; font-size: 1.5rem; font-weight: 800; color: #fff; }
+.ng-trends__hero p { margin: .2rem 0 0; color: rgba(255, 255, 255, .82); font-size: .9rem; }
+
+/* ---------- Seletor de janela ---------- */
+.ng-trends__windows { display: inline-flex; gap: .3rem; flex-wrap: wrap; }
+.ng-win {
+   display: inline-flex; align-items: center; gap: .3rem;
+   padding: .5rem .85rem;
+   border-radius: 10px;
+   font-size: .84rem; font-weight: 700;
+   color: #fff; text-decoration: none;
+   background: rgba(255, 255, 255, .14);
+   border: 1px solid rgba(255, 255, 255, .28);
+   transition: background .15s, transform .15s;
+}
+.ng-win:hover { background: rgba(255, 255, 255, .26); color: #fff; transform: translateY(-1px); }
+.ng-win.is-active { background: #fff; color: #0a3a6b; border-color: #fff; }
+
+/* ---------- Cartoes ---------- */
+.ng-panel {
+   border: 1px solid rgba(15, 23, 42, .08);
+   border-radius: 14px;
+   background: var(--tblr-bg-surface, #fff);
+   overflow: hidden;
+   margin-bottom: 1.1rem;
+}
+.ng-panel__head {
+   display: flex; align-items: center; gap: .65rem;
+   padding: .9rem 1.15rem;
+   border-bottom: 1px solid rgba(15, 23, 42, .08);
+}
+.ng-panel__head .ti { font-size: 1.2rem; color: #0087f5; }
+.ng-panel__head h3 { margin: 0; font-size: 1rem; font-weight: 800; }
+.ng-panel__head p { margin: 0; font-size: .8rem; color: var(--tblr-text-muted, #6c757d); }
+.ng-panel__body { padding: 1.15rem; }
+
+/* ---------- Comparativo principal ---------- */
+.ng-compare { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.ng-compare__cell { display: flex; flex-direction: column; gap: .25rem; }
+.ng-compare__label { font-size: .78rem; font-weight: 700; color: var(--tblr-text-muted, #6c757d); text-transform: uppercase; letter-spacing: .03em; }
+.ng-compare__big { font-size: 2.4rem; font-weight: 800; line-height: 1; color: #041e42; }
+.ng-compare__sub { font-size: .82rem; color: var(--tblr-text-muted, #6c757d); }
+
+/* delta badge */
+.ng-delta {
+   display: inline-flex; align-items: center; gap: .35rem;
+   align-self: flex-start;
+   padding: .3rem .6rem;
+   border-radius: 999px;
+   font-size: .95rem; font-weight: 800;
+   font-variant-numeric: tabular-nums;
+}
+.ng-delta--up   { color: #b42318; background: #fee4e2; }   /* subiu = pior */
+.ng-delta--down { color: #067647; background: #d1fadf; }   /* desceu = melhor */
+.ng-delta--flat { color: #475467; background: #eaecf0; }
+.ng-delta .ti { font-size: 1.05rem; }
+
+.ng-flow { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 1rem; padding-top: .9rem; border-top: 1px dashed rgba(15,23,42,.12); }
+.ng-flow__item { display: flex; align-items: center; gap: .45rem; font-size: .88rem; font-weight: 600; }
+.ng-flow__dot { width: 10px; height: 10px; border-radius: 3px; }
+.ng-flow__dot--open { background: #0087f5; }
+.ng-flow__dot--res  { background: #12b76a; }
+
+/* aviso de baseline */
+.ng-note {
+   display: flex; align-items: flex-start; gap: .5rem;
+   margin-top: .9rem; padding: .65rem .85rem;
+   border-radius: 10px;
+   background: #fff8e6; border: 1px solid #f4d772; color: #7a5b00;
+   font-size: .83rem;
+}
+.ng-note .ti { color: #c08a00; margin-top: .1rem; }
+
+/* ---------- Severidade ---------- */
+.ng-sev-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .85rem; }
+.ng-sev-card {
+   position: relative;
+   padding: .95rem 1rem;
+   border: 1px solid rgba(15, 23, 42, .08);
+   border-radius: 12px;
+   background: var(--tblr-bg-surface, #fff);
+   overflow: hidden;
+}
+.ng-sev-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+.ng-sev-card--critical::before { background: #dc2626; }
+.ng-sev-card--high::before     { background: #ea580c; }
+.ng-sev-card--medium::before   { background: #f59e0b; }
+.ng-sev-card--low::before      { background: #64748b; }
+.ng-sev-card__name { font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; }
+.ng-sev-card--critical .ng-sev-card__name { color: #dc2626; }
+.ng-sev-card--high .ng-sev-card__name     { color: #ea580c; }
+.ng-sev-card--medium .ng-sev-card__name   { color: #b45309; }
+.ng-sev-card--low .ng-sev-card__name      { color: #475569; }
+.ng-sev-card__num { display: block; margin-top: .3rem; font-size: 1.9rem; font-weight: 800; line-height: 1; color: #041e42; }
+.ng-sev-card__delta { margin-top: .5rem; font-size: .82rem; font-weight: 700; display: inline-flex; align-items: center; gap: .25rem; }
+.ng-sev-card__delta--up   { color: #b42318; }
+.ng-sev-card__delta--down { color: #067647; }
+.ng-sev-card__delta--flat { color: #667085; }
+
+/* ---------- Mini grafico de colunas (opened/resolved por mes) ---------- */
+.ng-chart { display: flex; align-items: flex-end; gap: .6rem; height: 180px; padding: .5rem .25rem 0; overflow-x: auto; }
+.ng-chart__col { display: flex; flex-direction: column; align-items: center; gap: .35rem; min-width: 56px; flex: 1 0 56px; height: 100%; }
+.ng-chart__bars { display: flex; align-items: flex-end; justify-content: center; gap: 4px; width: 100%; flex: 1; }
+.ng-chart__bar { width: 16px; border-radius: 6px 6px 0 0; min-height: 3px; transition: height .3s; }
+.ng-chart__bar--open { background: linear-gradient(180deg, #0087f5, #0a6fd0); }
+.ng-chart__bar--res  { background: linear-gradient(180deg, #32d583, #12b76a); }
+.ng-chart__label { font-size: .72rem; color: var(--tblr-text-muted, #6c757d); font-weight: 600; white-space: nowrap; }
+.ng-chart__val { font-size: .68rem; font-weight: 700; color: #475467; }
+
+/* ---------- Tabela de execucoes ---------- */
+.ng-runs { width: 100%; border-collapse: collapse; font-size: .86rem; }
+.ng-runs thead th {
+   text-align: left; padding: .6rem 1.1rem;
+   font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+   color: var(--tblr-text-muted, #6c757d);
+   border-bottom: 1px solid rgba(15, 23, 42, .08);
+}
+.ng-runs tbody td { padding: .6rem 1.1rem; border-bottom: 1px solid rgba(15, 23, 42, .06); vertical-align: middle; }
+.ng-runs tbody tr:hover { background: rgba(0, 135, 245, .04); }
+.ng-runs__name { font-weight: 600; color: #0a3a6b; }
+.ng-runs__num { font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.ng-pill {
+   display: inline-flex; align-items: center; gap: .25rem;
+   padding: .15rem .5rem; border-radius: 999px;
+   font-size: .78rem; font-weight: 800; font-variant-numeric: tabular-nums;
+}
+.ng-pill--up   { color: #b42318; background: #fee4e2; }
+.ng-pill--down { color: #067647; background: #d1fadf; }
+.ng-pill--flat { color: #475467; background: #eaecf0; }
+.ng-pill--new  { color: #475467; background: #eaecf0; }
+
+@media (max-width: 1100px) {
+   .ng-sev-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+   .ng-compare { grid-template-columns: 1fr; }
+}

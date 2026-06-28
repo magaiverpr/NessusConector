@@ -1,0 +1,665 @@
+:root {
+    --nessus-radius: 12px;
+    --nessus-radius-sm: 8px;
+    --nessus-border: rgba(15, 23, 42, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(15, 23, 42, 0.35);
+    --nessus-primary: #0087f5;
+    --nessus-primary-strong: #0a6fd0;
+    --nessus-primary-rgb: 0, 135, 245;
+    --nessus-midnight: #041e42;
+    --nessus-midnight-2: #0a3a6b;
+    --nessus-neon: #26ff93;
+    --nessus-lucid: #00f0ff;
+    --nessus-gray: #8595a2;
+    --nessus-grad: linear-gradient(120deg, #041e42 0%, #0a3a6b 52%, #0087f5 100%);
+    --nessus-grad-soft: linear-gradient(120deg, rgba(4, 30, 66, 0.04), rgba(0, 135, 245, 0.08));
+    --nessus-glow: 0 18px 42px -18px rgba(4, 30, 66, 0.55);
+    --nessus-muted: var(--tblr-text-muted, #6c757d);
+    --nessus-surface: var(--tblr-bg-surface, #fff);
+    --nessus-surface-soft: rgba(15, 23, 42, 0.025);
+    --nessus-success: #198754;
+    --nessus-success-soft: rgba(25, 135, 84, 0.12);
+    --nessus-danger: #dc3545;
+    --nessus-danger-soft: rgba(220, 53, 69, 0.12);
+    --nessus-warning: #b46309;
+    --nessus-warning-soft: rgba(253, 126, 20, 0.14);
+}
+
+[data-bs-theme="dark"] {
+    --nessus-border: rgba(255, 255, 255, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(0, 0, 0, 0.7);
+    --nessus-surface-soft: rgba(255, 255, 255, 0.03);
+    --nessus-warning: #fbbf24;
+    --nessus-warning-soft: rgba(251, 191, 36, 0.18);
+    --nessus-success: #34d399;
+    --nessus-success-soft: rgba(52, 211, 153, 0.15);
+}
+
+.nessus-config-page {
+    --gutter: 1rem;
+    position: relative;
+    padding: 0;
+}
+
+.nessus-config-page__hero {
+    margin-bottom: 1.25rem;
+    padding: 0 0.25rem;
+}
+
+.nessus-config-page__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.nessus-config-page__subtitle {
+    margin: 0;
+    color: var(--nessus-muted);
+    font-size: 0.92rem;
+    max-width: 60ch;
+}
+
+.nessus-config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.nessus-config-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.nessus-config-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--nessus-surface);
+    border: 1px solid var(--nessus-border);
+    border-radius: var(--nessus-radius);
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nessus-config-card:focus-within {
+    border-color: rgba(0, 135, 245, 0.35);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.08);
+}
+
+.nessus-config-card--wide {
+    grid-column: 1 / -1;
+}
+
+.nessus-config-card__head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid var(--nessus-border);
+    background: linear-gradient(180deg, var(--nessus-surface-soft) 0%, transparent 100%);
+}
+
+.nessus-config-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.nessus-config-card__icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nessus-config-card__icon--vm {
+    background: linear-gradient(135deg, #0087f5 0%, #041e42 100%);
+}
+
+.nessus-config-card__icon--was {
+    background: linear-gradient(135deg, #00b8c4 0%, #0087f5 100%);
+}
+
+.nessus-config-card__icon--asset {
+    background: linear-gradient(135deg, #0d9488 0%, #115e59 100%);
+}
+
+.nessus-config-card__title-block {
+    min-width: 0;
+}
+
+.nessus-config-card__title {
+    margin: 0 0 0.15rem;
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.nessus-config-card__hint {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--nessus-muted);
+    line-height: 1.4;
+}
+
+.nessus-config-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.15rem;
+    flex: 1;
+}
+
+.nessus-config-card__body--split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 720px) {
+    .nessus-config-card__body--split {
+        grid-template-columns: 1.5fr 1fr;
+        gap: 2rem;
+    }
+}
+
+.nessus-config-card__foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.85rem 1.15rem;
+    border-top: 1px solid var(--nessus-border);
+    background: var(--nessus-surface-soft);
+}
+
+/* ---- Connection pill in card header ---- */
+
+.nessus-conn-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+    background: var(--nessus-surface-soft);
+    color: var(--nessus-muted);
+    border: 1px solid var(--nessus-border);
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.nessus-conn-pill__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+}
+
+.nessus-conn-pill__latency {
+    margin-left: 4px;
+    font-weight: 500;
+    opacity: 0.85;
+    font-variant-numeric: tabular-nums;
+}
+
+.nessus-conn-pill--muted {
+    background: var(--nessus-surface-soft);
+    color: var(--nessus-muted);
+}
+
+.nessus-conn-pill--testing {
+    background: rgba(0, 135, 245, 0.1);
+    color: var(--nessus-primary);
+    border-color: rgba(0, 135, 245, 0.2);
+}
+
+.nessus-conn-pill--testing .nessus-conn-pill__dot {
+    animation: nessus-config-pulse 1.1s ease-in-out infinite;
+}
+
+.nessus-conn-pill--success {
+    background: var(--nessus-success-soft);
+    color: var(--nessus-success);
+    border-color: rgba(25, 135, 84, 0.25);
+}
+
+.nessus-conn-pill--danger {
+    background: var(--nessus-danger-soft);
+    color: var(--nessus-danger);
+    border-color: rgba(220, 53, 69, 0.25);
+}
+
+@keyframes nessus-config-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ---- Inline message under inputs ---- */
+
+.nessus-conn-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: var(--nessus-radius-sm);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.nessus-conn-message--success {
+    background: var(--nessus-success-soft);
+    color: var(--nessus-success);
+    border: 1px solid rgba(25, 135, 84, 0.2);
+}
+
+.nessus-conn-message--danger {
+    background: var(--nessus-danger-soft);
+    color: var(--nessus-danger);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.nessus-conn-message__icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.nessus-conn-message__icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.nessus-conn-message code {
+    background: rgba(15, 23, 42, 0.07);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+}
+
+[data-bs-theme="dark"] .nessus-conn-message code {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Fields ---- */
+
+.nessus-config-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nessus-config-field-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nessus-config-field-required {
+    color: var(--nessus-danger);
+    font-weight: 700;
+}
+
+.nessus-config-input {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    color: inherit;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: border-color 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+}
+
+.nessus-config-input::placeholder {
+    color: var(--nessus-muted);
+    opacity: 0.65;
+}
+
+.nessus-config-input:hover:not(:focus) {
+    border-color: rgba(0, 135, 245, 0.25);
+}
+
+.nessus-config-input:focus {
+    outline: none;
+    border-color: var(--nessus-primary);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.15);
+}
+
+.nessus-config-input[aria-invalid="true"],
+.nessus-config-input.is-invalid {
+    border-color: var(--nessus-danger);
+    box-shadow: 0 0 0 3px var(--nessus-danger-soft);
+}
+
+.nessus-config-input[aria-invalid="false"]:not(:focus) {
+    border-color: rgba(25, 135, 84, 0.35);
+}
+
+.nessus-config-field-feedback {
+    font-size: 0.78rem;
+    color: var(--nessus-danger);
+    margin-top: 2px;
+}
+
+.nessus-config-field-hint {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--nessus-muted);
+    line-height: 1.4;
+}
+
+/* ---- Secret field with eye toggle ---- */
+
+.nessus-config-secret {
+    position: relative;
+}
+
+.nessus-config-input--secret {
+    padding-right: 42px;
+    font-family: 'SFMono-Regular', Menlo, Monaco, 'Liberation Mono', monospace;
+    letter-spacing: 0.02em;
+}
+
+.nessus-config-secret__toggle {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--nessus-muted);
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+}
+
+.nessus-config-secret__toggle:hover {
+    color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.08);
+}
+
+.nessus-config-secret__toggle:focus-visible {
+    outline: none;
+    border-color: var(--nessus-primary);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.15);
+}
+
+.nessus-config-secret__icon {
+    width: 16px;
+    height: 16px;
+}
+
+.nessus-config-secret__icon--hide {
+    display: none;
+}
+
+.nessus-config-secret[data-revealed="true"] .nessus-config-secret__icon--show {
+    display: none;
+}
+
+.nessus-config-secret[data-revealed="true"] .nessus-config-secret__icon--hide {
+    display: inline-block;
+}
+
+/* ---- Itemtypes checkboxes ---- */
+
+.nessus-config-itemtypes__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.nessus-config-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    cursor: pointer;
+    transition: border-color 0.14s ease, background 0.14s ease;
+    user-select: none;
+    font-size: 0.86rem;
+}
+
+.nessus-config-checkbox:hover {
+    border-color: rgba(0, 135, 245, 0.3);
+    background: rgba(0, 135, 245, 0.04);
+}
+
+.nessus-config-checkbox input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+.nessus-config-checkbox__indicator {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    flex-shrink: 0;
+    transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.nessus-config-checkbox__indicator::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    width: 5px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.14s ease;
+}
+
+.nessus-config-checkbox input:checked + .nessus-config-checkbox__indicator {
+    background: var(--nessus-primary);
+    border-color: var(--nessus-primary);
+}
+
+.nessus-config-checkbox input:checked + .nessus-config-checkbox__indicator::after {
+    transform: rotate(45deg) scale(1);
+}
+
+.nessus-config-checkbox input:focus-visible + .nessus-config-checkbox__indicator {
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.18);
+}
+
+.nessus-config-checkbox:has(input:checked) {
+    border-color: rgba(0, 135, 245, 0.45);
+    background: rgba(0, 135, 245, 0.06);
+}
+
+/* ---- Empty-state note for WAS card ---- */
+
+.nessus-config-empty-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 11px 13px;
+    border-radius: var(--nessus-radius-sm);
+    background: var(--nessus-surface-soft);
+    border: 1px dashed var(--nessus-border);
+    font-size: 0.86rem;
+    color: var(--nessus-muted);
+    line-height: 1.4;
+}
+
+.nessus-config-empty-note svg {
+    margin-top: 1px;
+    flex-shrink: 0;
+}
+
+/* ---- Buttons ---- */
+
+.nessus-config-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: var(--nessus-radius-sm);
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent;
+    color: inherit;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+    white-space: nowrap;
+}
+
+.nessus-config-btn[disabled] {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.nessus-config-btn--primary {
+    background: var(--nessus-primary);
+    color: #fff;
+    border-color: var(--nessus-primary);
+}
+
+.nessus-config-btn--primary:hover:not([disabled]) {
+    background: #0a6fd0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -8px rgba(0, 135, 245, 0.6);
+}
+
+.nessus-config-btn--ghost {
+    background: transparent;
+    color: inherit;
+    border-color: var(--nessus-border);
+}
+
+.nessus-config-btn--ghost:hover:not([disabled]) {
+    border-color: var(--nessus-primary);
+    color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.06);
+}
+
+.nessus-config-btn[data-loading="true"] {
+    pointer-events: none;
+    position: relative;
+    color: transparent;
+}
+
+.nessus-config-btn[data-loading="true"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    color: var(--nessus-primary);
+    animation: nessus-config-spin 0.7s linear infinite;
+}
+
+.nessus-config-btn[data-loading="true"].nessus-config-btn--primary::after {
+    color: #fff;
+}
+
+@keyframes nessus-config-spin {
+    to { transform: rotate(360deg); }
+}
+
+.nessus-config-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.25rem 0.5rem 0;
+}
+
+.nessus-config-readonly {
+    margin: 0;
+    color: var(--nessus-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* Mobile tweaks */
+
+@media (max-width: 540px) {
+    .nessus-config-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nessus-config-card__head {
+        grid-template-columns: auto 1fr;
+        row-gap: 0.6rem;
+    }
+
+    .nessus-conn-pill {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+
+    .nessus-config-page__title {
+        font-size: 1.2rem;
+    }
+
+    .nessus-config-actions {
+        flex-wrap: wrap;
+    }
+
+    .nessus-config-actions .nessus-config-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* ===== Tenable brand hero ===== */
+.nessus-config-page__hero {
+    position: relative;
+    overflow: hidden;
+    padding: 1.3rem 1.45rem;
+    border-radius: var(--nessus-radius);
+    background: var(--nessus-grad);
+    color: #fff;
+    box-shadow: var(--nessus-glow);
+}
+.nessus-config-page__hero::after {
+    content: "";
+    position: absolute;
+    top: -55%;
+    right: -6%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(38, 255, 147, 0.16), transparent 62%);
+    pointer-events: none;
+}
+.nessus-config-page__title,
+.nessus-config-page__subtitle {
+    position: relative;
+    z-index: 1;
+}
+.nessus-config-page__title { color: #fff; }
+.nessus-config-page__subtitle { color: rgba(255, 255, 255, 0.85); }

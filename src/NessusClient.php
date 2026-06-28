@@ -35,6 +35,13 @@ class NessusClient
         return $this->request('GET', '/scans/' . rawurlencode($scanId));
     }
 
+    public function getAllScans(): array
+    {
+        $data = $this->request('GET', '/scans');
+
+        return $this->extractItems($data, ['scans', 'items', 'data', 'results']);
+    }
+
     public function getScanHosts(string $scanId): array
     {
         $data = $this->getScanDetails($scanId);
@@ -64,7 +71,7 @@ class NessusClient
     {
         $baseUrl = trim((string) ($this->config->fields['api_url'] ?? ''));
         $accessKey = trim((string) ($this->config->fields['access_key'] ?? ''));
-        $secretKey = trim((string) ($this->config->fields['secret_key'] ?? ''));
+        $secretKey = trim($this->config->getSecretKey());
         $timeout = max(1, (int) ($this->config->fields['timeout'] ?? 30));
 
         if ($baseUrl === '') {
@@ -139,6 +146,33 @@ class NessusClient
         return $decoded;
     }
 
+    private function extractItems(array $response, array $keys): array
+    {
+        foreach ($keys as $key) {
+            if (isset($response[$key]) && is_array($response[$key])) {
+                return array_values(array_filter($response[$key], 'is_array'));
+            }
+        }
+
+        foreach (['data', 'response', 'result'] as $containerKey) {
+            if (!isset($response[$containerKey]) || !is_array($response[$containerKey])) {
+                continue;
+            }
+
+            foreach ($keys as $key) {
+                if (isset($response[$containerKey][$key]) && is_array($response[$containerKey][$key])) {
+                    return array_values(array_filter($response[$containerKey][$key], 'is_array'));
+                }
+            }
+        }
+
+        if (array_is_list($response)) {
+            return array_values(array_filter($response, 'is_array'));
+        }
+
+        return [];
+    }
+
     private function isValidBaseUrl(string $baseUrl): bool
     {
         if (!filter_var($baseUrl, FILTER_VALIDATE_URL)) {
@@ -153,7 +187,17 @@ class NessusClient
         $scheme = strtolower((string) ($parts['scheme'] ?? ''));
         $host = (string) ($parts['host'] ?? '');
 
-        return in_array($scheme, ['http', 'https'], true) && $host !== '';
+        if (!in_array($scheme, ['http', 'https'], true) || $host === '') {
+            return false;
+        }
+
+        if (filter_var($host, FILTER_VALIDATE_IP) !== false) {
+            if (str_starts_with($host, '127.') || str_starts_with($host, '169.254.') || $host === '::1') {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private function humanizeCurlError(string $error): string

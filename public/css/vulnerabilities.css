@@ -1,0 +1,1128 @@
+:root {
+    --nessus-radius: 12px;
+    --nessus-radius-sm: 8px;
+    --nessus-border: rgba(15, 23, 42, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(15, 23, 42, 0.35);
+    --nessus-primary: #0087f5;
+    --nessus-primary-strong: #0a6fd0;
+    --nessus-primary-rgb: 0, 135, 245;
+    --nessus-midnight: #041e42;
+    --nessus-midnight-2: #0a3a6b;
+    --nessus-neon: #26ff93;
+    --nessus-lucid: #00f0ff;
+    --nessus-gray: #8595a2;
+    --nessus-grad: linear-gradient(120deg, #041e42 0%, #0a3a6b 52%, #0087f5 100%);
+    --nessus-grad-soft: linear-gradient(120deg, rgba(4, 30, 66, 0.04), rgba(0, 135, 245, 0.08));
+    --nessus-glow: 0 18px 42px -18px rgba(4, 30, 66, 0.55);
+    --nessus-muted: var(--tblr-text-muted, #6c757d);
+    --nessus-surface: var(--tblr-bg-surface, #fff);
+
+    --sev-critical-bg: linear-gradient(135deg, #8f233f 0%, #5b1228 100%);
+    --sev-critical-color: #ffffff;
+    --sev-critical-accent: #8f233f;
+    --sev-critical-soft: rgba(143, 35, 63, 0.12);
+
+    --sev-high-bg: linear-gradient(135deg, #d94f4f 0%, #a02828 100%);
+    --sev-high-color: #ffffff;
+    --sev-high-accent: #b91c1c;
+    --sev-high-soft: rgba(220, 53, 69, 0.13);
+
+    --sev-medium-bg: linear-gradient(135deg, #f6a14a 0%, #d97706 100%);
+    --sev-medium-color: #ffffff;
+    --sev-medium-accent: #b45309;
+    --sev-medium-soft: rgba(246, 161, 74, 0.16);
+
+    --sev-low-bg: linear-gradient(135deg, #f2d15c 0%, #ca8a04 100%);
+    --sev-low-color: #1f2937;
+    --sev-low-accent: #854d0e;
+    --sev-low-soft: rgba(234, 179, 8, 0.16);
+
+    --sev-info-bg: linear-gradient(135deg, #3aa3f5 0%, #04357f 100%);
+    --sev-info-color: #ffffff;
+    --sev-info-accent: #0a6fd0;
+    --sev-info-soft: rgba(0, 135, 245, 0.10);
+}
+
+[data-bs-theme="dark"] {
+    --nessus-border: rgba(255, 255, 255, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(0, 0, 0, 0.7);
+
+    /* Brighter accents to keep contrast on dark surfaces */
+    --sev-medium-accent: #fbbf24;
+    --sev-low-accent: #fde047;
+}
+
+[data-bs-theme="dark"] .nessus-sev-chip--medium {
+    background: #f59e0b;
+    color: #1f2937;
+}
+
+[data-bs-theme="dark"] .nessus-sev-chip--low {
+    background: #facc15;
+    color: #1f2937;
+}
+
+[data-bs-theme="dark"] .nessus-toast--warning .nessus-toast__icon { color: #fbbf24; }
+[data-bs-theme="dark"] .nessus-toast--error .nessus-toast__icon { color: #f87171; }
+
+.nessus-vuln-page {
+    --gutter: 1rem;
+}
+
+.nessus-vuln-page__hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gutter);
+    margin-bottom: 1.25rem;
+}
+
+.nessus-vuln-page__title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.nessus-vuln-page__title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.nessus-vuln-page__scan-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(0, 135, 245, 0.08);
+    color: var(--nessus-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.nessus-vuln-page__back {
+    margin-bottom: 0.75rem;
+}
+
+.nessus-btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    color: var(--nessus-muted);
+    background: transparent;
+    border: 1px solid var(--nessus-border);
+    border-radius: var(--nessus-radius-sm);
+    text-decoration: none;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+}
+
+.nessus-btn-back:hover {
+    color: var(--nessus-primary);
+    border-color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.06);
+    text-decoration: none;
+}
+
+.nessus-btn-back svg {
+    width: 14px;
+    height: 14px;
+}
+
+.nessus-sev-dashboard {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.nessus-sev-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 12px;
+    border-radius: var(--nessus-radius);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    border: 0;
+    text-align: center;
+    overflow: hidden;
+    user-select: none;
+}
+
+.nessus-sev-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    z-index: 0;
+}
+
+.nessus-sev-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.nessus-sev-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 32px -16px rgba(15, 23, 42, 0.35);
+    filter: brightness(1.04);
+}
+
+.nessus-sev-card[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.55), 0 18px 32px -14px rgba(15, 23, 42, 0.45);
+    transform: translateY(-1px);
+}
+
+.nessus-sev-card--critical { background: var(--sev-critical-bg); color: var(--sev-critical-color); }
+.nessus-sev-card--high     { background: var(--sev-high-bg);     color: var(--sev-high-color); }
+.nessus-sev-card--medium   { background: var(--sev-medium-bg);   color: var(--sev-medium-color); }
+.nessus-sev-card--low      { background: var(--sev-low-bg);      color: var(--sev-low-color); }
+.nessus-sev-card--info     { background: var(--sev-info-bg);     color: var(--sev-info-color); }
+
+.nessus-sev-card__icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    margin-bottom: 4px;
+    opacity: 0.88;
+}
+
+.nessus-sev-card__count {
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.nessus-sev-card__label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.nessus-sev-distribution {
+    display: flex;
+    width: 100%;
+    height: 32px;
+    overflow: hidden;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    margin-bottom: 1.25rem;
+}
+
+.nessus-sev-distribution__segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.74rem;
+    color: #fff;
+    transition: filter 0.14s ease;
+    min-width: 0;
+}
+
+.nessus-sev-distribution__segment:hover {
+    filter: brightness(1.08);
+}
+
+.nessus-sev-distribution__segment--critical { background: var(--sev-critical-accent); }
+.nessus-sev-distribution__segment--high     { background: var(--sev-high-accent); }
+.nessus-sev-distribution__segment--medium   { background: var(--sev-medium-accent); color: #fff; }
+.nessus-sev-distribution__segment--low      { background: #ca8a04; color: #1f2937; }
+.nessus-sev-distribution__segment--info     { background: var(--sev-info-accent); }
+.nessus-sev-distribution__segment--empty    { background: transparent; }
+
+.nessus-vuln-page__total {
+    font-size: 0.85rem;
+    color: var(--nessus-muted);
+    margin: -0.5rem 0 1rem;
+}
+
+.nessus-vuln-page__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--nessus-border);
+    border-radius: var(--nessus-radius);
+    background: var(--nessus-surface);
+}
+
+.nessus-vuln-page__search {
+    position: relative;
+    flex: 1 1 240px;
+    max-width: 380px;
+}
+
+.nessus-vuln-page__search input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    color: var(--tblr-body-color, #182433);
+    transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.nessus-vuln-page__search input:focus {
+    outline: none;
+    border-color: var(--nessus-primary);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.15);
+}
+
+.nessus-vuln-page__filter {
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: transparent;
+    color: inherit;
+    font-size: 0.88rem;
+    cursor: pointer;
+}
+
+.nessus-vuln-page__host-form {
+    margin: 0;
+    display: inline-flex;
+}
+
+.nessus-vuln-page__host-form .nessus-vuln-page__filter {
+    max-width: 260px;
+}
+
+.nessus-vuln-page__select-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 36px;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--nessus-border);
+    border-radius: var(--nessus-radius-sm);
+    background: var(--nessus-surface);
+    background: color-mix(in srgb, var(--nessus-surface) 88%, var(--nessus-primary) 12%);
+    color: inherit;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nessus-vuln-page__select-all input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--nessus-primary);
+}
+
+.nessus-vuln-page__select-all:has(input:disabled) {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.nessus-vuln-page__select-all:has(input:focus-visible) {
+    outline: 3px solid rgba(0, 135, 245, 0.18);
+    outline-offset: 2px;
+}
+
+.nessus-vuln-page__meta {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--nessus-muted);
+}
+
+.nessus-vuln-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nessus-vuln-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 0.85rem 1rem;
+    border-radius: var(--nessus-radius);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+}
+
+.nessus-vuln-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: var(--nessus-radius) 0 0 var(--nessus-radius);
+    background: var(--nessus-primary);
+    opacity: 0;
+    transition: opacity 0.14s ease;
+}
+
+.nessus-vuln-row[data-severity="critical"]::before { background: var(--sev-critical-accent); }
+.nessus-vuln-row[data-severity="high"]::before     { background: var(--sev-high-accent); }
+.nessus-vuln-row[data-severity="medium"]::before   { background: var(--sev-medium-accent); }
+.nessus-vuln-row[data-severity="low"]::before      { background: var(--sev-low-accent); }
+.nessus-vuln-row[data-severity="info"]::before     { background: var(--sev-info-accent); }
+
+.nessus-vuln-row:hover {
+    border-color: rgba(0, 135, 245, 0.35);
+    box-shadow: var(--nessus-shadow-hover);
+}
+
+.nessus-vuln-row:hover::before {
+    opacity: 0.85;
+}
+
+.nessus-vuln-row[data-selected="true"] {
+    background: rgba(0, 135, 245, 0.05);
+    border-color: rgba(0, 135, 245, 0.45);
+}
+
+.nessus-vuln-row[data-selected="true"]::before {
+    opacity: 1;
+}
+
+.nessus-vuln-row[hidden] {
+    display: none !important;
+}
+
+.nessus-vuln-row__check {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.nessus-vuln-row__check input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    accent-color: var(--nessus-primary);
+}
+
+.nessus-vuln-row__check--placeholder {
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+}
+
+.nessus-sev-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 1.4;
+    min-width: 78px;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.nessus-sev-chip--critical { background: var(--sev-critical-accent); color: #fff; }
+.nessus-sev-chip--high     { background: var(--sev-high-accent);     color: #fff; }
+.nessus-sev-chip--medium   { background: #d97706;                    color: #fff; }
+.nessus-sev-chip--low      { background: #ca8a04;                    color: #1f2937; }
+.nessus-sev-chip--info     { background: var(--sev-info-accent);     color: #fff; }
+
+.nessus-vuln-row__body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nessus-vuln-row__title {
+    margin: 0;
+    font-size: 0.97rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: inherit;
+    word-break: break-word;
+}
+
+.nessus-vuln-row__title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nessus-vuln-row__title a:hover {
+    color: var(--nessus-primary);
+    text-decoration: none;
+}
+
+.nessus-vuln-row__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-size: 0.78rem;
+    color: var(--nessus-muted);
+    line-height: 1.4;
+}
+
+.nessus-vuln-row__meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nessus-vuln-row__meta-item a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 135, 245, 0.4);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+.nessus-vuln-row__meta-item a:hover {
+    color: var(--nessus-primary);
+}
+
+.nessus-vuln-row__ticket {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    border-radius: 5px;
+    background: rgba(25, 135, 84, 0.12);
+    color: #198754;
+    font-size: 0.74rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nessus-vuln-row__ticket:hover {
+    background: rgba(25, 135, 84, 0.2);
+    color: #146c43;
+    text-decoration: none;
+}
+
+.nessus-vuln-row__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.nessus-vuln-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 11px;
+    border-radius: var(--nessus-radius-sm);
+    font-size: 0.81rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--nessus-border);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease, transform 0.14s ease;
+}
+
+.nessus-vuln-btn:hover {
+    border-color: var(--nessus-primary);
+    color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.06);
+    text-decoration: none;
+}
+
+.nessus-vuln-btn--primary {
+    background: var(--nessus-primary);
+    color: #fff;
+    border-color: transparent;
+}
+
+.nessus-vuln-btn--primary:hover {
+    background: #0a6fd0;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -8px rgba(0, 135, 245, 0.6);
+}
+
+.nessus-vuln-btn svg {
+    width: 13px;
+    height: 13px;
+}
+
+.nessus-vuln-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    border: 1px dashed var(--nessus-border);
+    border-radius: var(--nessus-radius);
+    color: var(--nessus-muted);
+    background: var(--nessus-surface);
+}
+
+.nessus-vuln-empty svg {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0.85rem;
+    opacity: 0.35;
+}
+
+.nessus-vuln-empty h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+}
+
+/* Reuse selection bar + modal + toast styles from scan-list — but redeclare for self-containment */
+.nessus-selection-bar {
+    position: sticky;
+    bottom: 16px;
+    margin: 16px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: var(--tblr-dark, #1f2937);
+    color: #fff;
+    box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.55);
+    width: max-content;
+    max-width: 92%;
+    z-index: 50;
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.22s ease;
+}
+
+.nessus-selection-bar.is-active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nessus-selection-bar__count {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.nessus-selection-bar__divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.nessus-selection-bar button {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.84rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.14s ease;
+}
+
+.nessus-selection-bar button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nessus-selection-bar button.is-primary:hover {
+    background: rgba(0, 135, 245, 0.3);
+}
+
+.nessus-toast-host {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.nessus-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--nessus-surface);
+    border: 1px solid var(--nessus-border);
+    box-shadow: 0 14px 32px -14px rgba(15, 23, 42, 0.35);
+    font-size: 0.85rem;
+    min-width: 240px;
+    max-width: 360px;
+    pointer-events: auto;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.28s ease;
+}
+
+.nessus-toast.is-visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.nessus-toast__icon { width: 18px; height: 18px; flex-shrink: 0; }
+.nessus-toast--success .nessus-toast__icon { color: #198754; }
+.nessus-toast--info .nessus-toast__icon { color: var(--nessus-primary); }
+.nessus-toast--error .nessus-toast__icon { color: #dc3545; }
+.nessus-toast--warning .nessus-toast__icon { color: #b46309; }
+
+.nessus-toast__body { flex: 1; line-height: 1.35; }
+.nessus-toast__close { background: transparent; border: none; color: var(--nessus-muted); font-size: 1.05rem; line-height: 1; cursor: pointer; padding: 0 4px; }
+.nessus-toast__close:hover { color: inherit; }
+
+.nessus-modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); z-index: 9998; opacity: 0; transition: opacity 0.18s ease; }
+.nessus-modal-backdrop.is-visible { opacity: 1; }
+.nessus-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -48%); width: min(460px, 92vw); background: var(--nessus-surface); border-radius: 14px; box-shadow: 0 30px 60px -20px rgba(15, 23, 42, 0.5); z-index: 9999; overflow: hidden; opacity: 0; transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.nessus-modal.is-visible { opacity: 1; transform: translate(-50%, -50%); }
+.nessus-modal__header { display: flex; align-items: center; gap: 12px; padding: 18px 20px 6px; }
+.nessus-modal__icon { width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nessus-modal__icon svg { width: 20px; height: 20px; }
+.nessus-modal--danger .nessus-modal__icon { background: rgba(220, 53, 69, 0.12); color: #dc3545; }
+.nessus-modal--info .nessus-modal__icon { background: rgba(0, 135, 245, 0.12); color: var(--nessus-primary); }
+.nessus-modal__title { margin: 0; font-size: 1.05rem; font-weight: 600; }
+.nessus-modal__body { padding: 8px 20px 6px 70px; font-size: 0.9rem; line-height: 1.5; color: var(--nessus-muted); }
+.nessus-modal__footer { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 20px 18px; }
+.nessus-modal__footer button { padding: 7px 16px; border-radius: var(--nessus-radius-sm); border: 1px solid transparent; font-size: 0.86rem; font-weight: 500; cursor: pointer; transition: background 0.14s ease, transform 0.14s ease, box-shadow 0.14s ease; }
+.nessus-modal__footer .nessus-btn-outline { background: transparent; color: inherit; border-color: var(--nessus-border); }
+.nessus-modal__footer .nessus-btn-outline:hover { border-color: var(--nessus-primary); color: var(--nessus-primary); background: rgba(0, 135, 245,.06); }
+.nessus-modal__footer .nessus-btn-primary { background: var(--nessus-primary); color: #fff; }
+.nessus-modal__footer .nessus-btn-primary:hover { background: #0a6fd0; transform: translateY(-1px); box-shadow: 0 6px 14px -8px rgba(0, 135, 245, 0.6); }
+.nessus-modal__footer .nessus-btn-danger { background: #dc3545; color: #fff; }
+.nessus-modal__footer .nessus-btn-danger:hover { background: #bb2d3b; transform: translateY(-1px); box-shadow: 0 6px 14px -8px rgba(220, 53, 69, 0.6); }
+
+/* ===== Vulnerability detail page ===== */
+.nessus-vuln-detail {
+    padding: 6px 4px;
+}
+
+.nessus-vuln-detail__hero {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 24px;
+    border-radius: var(--nessus-radius);
+    border-left: 5px solid var(--nessus-primary);
+    background: linear-gradient(135deg, rgba(0, 135, 245,0.04) 0%, transparent 100%);
+    margin-bottom: 24px;
+}
+
+.nessus-vuln-detail__hero[data-sev="critical"] { border-left-color: var(--sev-critical-accent); background: linear-gradient(135deg, var(--sev-critical-soft) 0%, transparent 100%); }
+.nessus-vuln-detail__hero[data-sev="high"]     { border-left-color: var(--sev-high-accent);     background: linear-gradient(135deg, var(--sev-high-soft) 0%, transparent 100%); }
+.nessus-vuln-detail__hero[data-sev="medium"]   { border-left-color: var(--sev-medium-accent);   background: linear-gradient(135deg, var(--sev-medium-soft) 0%, transparent 100%); }
+.nessus-vuln-detail__hero[data-sev="low"]      { border-left-color: var(--sev-low-accent);      background: linear-gradient(135deg, var(--sev-low-soft) 0%, transparent 100%); }
+.nessus-vuln-detail__hero[data-sev="info"]     { border-left-color: var(--sev-info-accent);     background: linear-gradient(135deg, var(--sev-info-soft) 0%, transparent 100%); }
+
+.nessus-vuln-detail__hero-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.nessus-vuln-detail__hero-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.nessus-vuln-detail__hero-sev {
+    display: inline-block;
+    padding: 3px 11px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.nessus-vuln-detail__hero-sev--critical { background: var(--sev-critical-accent); }
+.nessus-vuln-detail__hero-sev--high     { background: var(--sev-high-accent); }
+.nessus-vuln-detail__hero-sev--medium   { background: #d97706; }
+.nessus-vuln-detail__hero-sev--low      { background: #ca8a04; color: #1f2937; }
+.nessus-vuln-detail__hero-sev--info     { background: var(--sev-info-accent); }
+
+.nessus-vuln-detail__hero-title {
+    margin: 0;
+    font-size: 1.6rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: inherit;
+    word-break: break-word;
+}
+
+.nessus-vuln-detail__section {
+    margin: 22px 0;
+}
+
+.nessus-vuln-detail__section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--nessus-border);
+    color: inherit;
+}
+
+.nessus-vuln-detail__prose {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: inherit;
+    white-space: pre-wrap;
+}
+
+.nessus-vuln-detail__blockquote {
+    margin: 0;
+    padding: 12px 16px;
+    background: rgba(148, 163, 184, 0.08);
+    border-left: 3px solid #94a3b8;
+    border-radius: var(--nessus-radius-sm);
+    font-style: italic;
+    color: inherit;
+    line-height: 1.55;
+}
+
+.nessus-vuln-detail__highlight {
+    padding: 14px 18px;
+    background: rgba(25, 135, 84, 0.08);
+    border-left: 3px solid #198754;
+    border-radius: var(--nessus-radius-sm);
+    color: inherit;
+    line-height: 1.6;
+    font-size: 0.92rem;
+    white-space: pre-wrap;
+}
+
+.nessus-vuln-detail__cve-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nessus-vuln-detail__cve-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 7px;
+    background: rgba(0, 135, 245, 0.08);
+    border: 1px solid rgba(0, 135, 245, 0.2);
+    color: var(--nessus-primary);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+
+.nessus-vuln-detail__cve-chip:hover {
+    background: rgba(0, 135, 245, 0.16);
+    border-color: var(--nessus-primary);
+    text-decoration: none;
+}
+
+.nessus-vuln-detail__cve-chip.is-copied {
+    background: rgba(25, 135, 84, 0.16);
+    border-color: rgba(25, 135, 84, 0.4);
+    color: #198754;
+}
+
+.nessus-vuln-detail__cve-chip svg {
+    width: 12px;
+    height: 12px;
+}
+
+.nessus-vuln-detail__see-also {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nessus-vuln-detail__see-also li {
+    padding: 8px 12px;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    margin-bottom: 6px;
+    background: rgba(15, 23, 42, 0.02);
+}
+
+.nessus-vuln-detail__see-also a {
+    color: var(--nessus-primary);
+    text-decoration: none;
+    font-size: 0.88rem;
+    word-break: break-all;
+}
+
+.nessus-vuln-detail__see-also a:hover { text-decoration: underline; }
+
+.nessus-vuln-detail__output {
+    margin: 0;
+    padding: 16px 18px;
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: var(--nessus-radius-sm);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.nessus-vuln-detail__kv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nessus-vuln-detail__kv-card {
+    padding: 12px 14px;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    transition: border-color 0.14s ease, transform 0.14s ease;
+}
+
+.nessus-vuln-detail__kv-card:hover {
+    border-color: rgba(0, 135, 245, 0.3);
+    transform: translateY(-1px);
+}
+
+.nessus-vuln-detail__kv-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--nessus-muted);
+    margin-bottom: 4px;
+}
+
+.nessus-vuln-detail__kv-value {
+    font-size: 0.92rem;
+    color: inherit;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+.nessus-vuln-detail__ports {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--nessus-border);
+    border-radius: var(--nessus-radius-sm);
+    overflow: hidden;
+}
+
+.nessus-vuln-detail__ports th,
+.nessus-vuln-detail__ports td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--nessus-border);
+    font-size: 0.86rem;
+}
+
+.nessus-vuln-detail__ports th {
+    background: rgba(15, 23, 42, 0.04);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--nessus-muted);
+}
+
+.nessus-vuln-detail__ports tr:last-child td {
+    border-bottom: 0;
+}
+
+/* ===== Pagination bar ===== */
+
+.nessus-pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding: 0.65rem 0;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--nessus-border);
+    font-size: 0.84rem;
+    color: var(--nessus-muted);
+}
+
+.nessus-pagination__info {
+    flex: 1;
+    white-space: nowrap;
+}
+
+.nessus-pagination__nav {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.nessus-pagination__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    color: inherit;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: border-color 0.14s ease, color 0.14s ease, background 0.14s ease;
+    cursor: pointer;
+}
+
+.nessus-pagination__btn:hover {
+    border-color: var(--nessus-primary);
+    color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.06);
+    text-decoration: none;
+}
+
+.nessus-pagination__btn--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.nessus-pagination__per-page {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.nessus-pagination__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--nessus-muted);
+    white-space: nowrap;
+}
+
+.nessus-pagination__select {
+    padding: 4px 1.8rem 4px 8px;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    color: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+@media (max-width: 540px) {
+    .nessus-pagination {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nessus-pagination__per-page {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 720px) {
+    .nessus-sev-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .nessus-vuln-row {
+        grid-template-columns: auto auto 1fr;
+    }
+    .nessus-vuln-row__actions {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+        padding-top: 6px;
+        border-top: 1px dashed var(--nessus-border);
+    }
+    .nessus-vuln-detail__hero {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 540px) {
+    .nessus-vuln-page__hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nessus-vuln-page__toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nessus-vuln-page__search,
+    .nessus-vuln-page__filter,
+    .nessus-vuln-page__select-all {
+        max-width: none;
+        width: 100%;
+    }
+
+    .nessus-vuln-page__meta {
+        margin-left: 0;
+    }
+
+}
+
+/* ===== Tenable brand hero ===== */
+.nessus-vuln-page__hero {
+    position: relative;
+    overflow: hidden;
+    padding: 1.3rem 1.45rem;
+    border-radius: var(--nessus-radius);
+    background: var(--nessus-grad);
+    color: #fff;
+    box-shadow: var(--nessus-glow);
+}
+.nessus-vuln-page__hero::after {
+    content: "";
+    position: absolute;
+    top: -55%;
+    right: -6%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(38, 255, 147, 0.16), transparent 62%);
+    pointer-events: none;
+}
+.nessus-vuln-page__hero > * { position: relative; z-index: 1; }
+.nessus-vuln-page__hero .nessus-vuln-page__title { color: #fff; }
+.nessus-vuln-page__hero .nessus-vuln-page__scan-pill {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+}

@@ -66,6 +66,40 @@ class SyncJobService
         return $this->countJobsByStatus(['pending', 'running'], $entityIds);
     }
 
+    public function getRecentlyFinishedJobs(array $entityIds = [], string $finishedSince = '', int $limit = 20): array
+    {
+        global $DB;
+
+        $criteria = [
+            'status' => ['success', 'error'],
+        ];
+        if ($entityIds !== []) {
+            $criteria['entities_id'] = $entityIds;
+        }
+
+        $finishedSince = trim($finishedSince);
+        if ($finishedSince !== '') {
+            $timestamp = strtotime($finishedSince);
+            if ($timestamp !== false) {
+                $criteria['finished_at'] = ['>', date('Y-m-d H:i:s', $timestamp)];
+            }
+        }
+
+        $jobs = [];
+        $iterator = $DB->request([
+            'FROM'  => SyncJob::getTable(),
+            'WHERE' => $criteria,
+            'ORDER' => ['finished_at DESC', 'id DESC'],
+            'LIMIT' => max(1, min(50, $limit)),
+        ]);
+
+        foreach ($iterator as $row) {
+            $jobs[] = $row;
+        }
+
+        return array_reverse($jobs);
+    }
+
     public function processNextPendingJob(array $entityIds = []): ?array
     {
         global $DB;
@@ -114,6 +148,12 @@ class SyncJobService
                 'message'     => sprintf(__('Synchronization completed. Run #%d created.', 'nessusglpi'), $runId),
             ]);
 
+            AuditLog::info('sync', sprintf('Scan #%d synchronized (run #%d).', $scanId, $runId), [
+                'job_id'  => $jobId,
+                'scan_id' => $scanId,
+                'run_id'  => $runId,
+            ]);
+
             return [
                 'job_id'     => $jobId,
                 'scan_id'    => $scanId,
@@ -128,6 +168,11 @@ class SyncJobService
                 'status'      => 'error',
                 'finished_at' => $finishedAt,
                 'message'     => $e->getMessage(),
+            ]);
+
+            AuditLog::error('sync', sprintf('Scan #%d synchronization failed: %s', $scanId, $e->getMessage()), [
+                'job_id'  => $jobId,
+                'scan_id' => $scanId,
             ]);
 
             return [

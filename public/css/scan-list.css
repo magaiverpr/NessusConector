@@ -1,0 +1,968 @@
+:root {
+    --nessus-radius: 12px;
+    --nessus-radius-sm: 8px;
+    --nessus-border: rgba(15, 23, 42, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(15, 23, 42, 0.35);
+    --nessus-primary: #0087f5;
+    --nessus-primary-strong: #0a6fd0;
+    --nessus-primary-rgb: 0, 135, 245;
+    --nessus-midnight: #041e42;
+    --nessus-midnight-2: #0a3a6b;
+    --nessus-neon: #26ff93;
+    --nessus-lucid: #00f0ff;
+    --nessus-gray: #8595a2;
+    --nessus-grad: linear-gradient(120deg, #041e42 0%, #0a3a6b 52%, #0087f5 100%);
+    --nessus-grad-soft: linear-gradient(120deg, rgba(4, 30, 66, 0.04), rgba(0, 135, 245, 0.08));
+    --nessus-glow: 0 18px 42px -18px rgba(4, 30, 66, 0.55);
+    --nessus-muted: var(--tblr-text-muted, #6c757d);
+    --nessus-surface: var(--tblr-bg-surface, #fff);
+}
+
+[data-bs-theme="dark"] {
+    --nessus-border: rgba(255, 255, 255, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(0, 0, 0, 0.7);
+}
+
+.nessus-list-page {
+    --gutter: 1rem;
+    position: relative;
+}
+
+.nessus-list-page__hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gutter);
+    margin-bottom: 1.25rem;
+}
+
+.nessus-list-page__title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.nessus-list-page__title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.nessus-list-page__stats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nessus-stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(0, 135, 245, 0.08);
+    color: var(--nessus-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.nessus-stat-pill--warn {
+    background: rgba(253, 126, 20, 0.12);
+    color: #b46309;
+}
+
+[data-bs-theme="dark"] .nessus-stat-pill--warn {
+    background: rgba(251, 191, 36, 0.16);
+    color: #fbbf24;
+}
+
+.nessus-stat-pill--muted {
+    background: rgba(108, 117, 125, 0.12);
+    color: var(--nessus-muted);
+}
+
+.nessus-stat-pill__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.nessus-stat-pill--warn .nessus-stat-pill__dot {
+    animation: nessus-pulse 1.4s ease-in-out infinite;
+}
+
+.nessus-list-page__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nessus-btn-primary,
+.nessus-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--nessus-radius-sm);
+    font-size: 0.86rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.nessus-btn-primary > span,
+.nessus-btn-outline > span {
+    white-space: nowrap;
+}
+
+.nessus-btn-primary {
+    background: var(--nessus-primary);
+    color: #fff;
+}
+
+.nessus-btn-primary:hover {
+    background: #0a6fd0;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -8px rgba(0, 135, 245, 0.6);
+}
+
+.nessus-btn-outline {
+    background: transparent;
+    color: inherit;
+    border-color: var(--nessus-border);
+}
+
+.nessus-btn-outline:hover {
+    border-color: var(--nessus-primary);
+    color: var(--nessus-primary);
+    text-decoration: none;
+    background: rgba(0, 135, 245, 0.06);
+}
+
+.nessus-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+}
+
+.nessus-btn-icon svg {
+    width: 15px;
+    height: 15px;
+}
+
+.nessus-btn-icon:hover {
+    background: rgba(0, 135, 245, 0.08);
+    color: var(--nessus-primary);
+}
+
+.nessus-btn-icon--danger:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.nessus-list-page__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--nessus-border);
+    border-radius: var(--nessus-radius);
+    background: var(--nessus-surface);
+    position: relative;
+    z-index: 1;
+}
+
+.nessus-list-page__search {
+    display: block;
+    position: relative;
+    flex: 1 1 240px;
+    max-width: 380px;
+}
+
+.nessus-list-page__search {
+    flex: 1 1 240px;
+    max-width: 380px;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    color: var(--tblr-body-color, #182433);
+    transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.nessus-list-page__search:focus {
+    outline: none;
+    border-color: var(--nessus-primary);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.15);
+}
+
+.nessus-list-page__filter {
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: transparent;
+    color: inherit;
+    font-size: 0.88rem;
+}
+
+.nessus-list-page__meta {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--nessus-muted);
+}
+
+.nessus-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.nessus-list-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 0.85rem 1rem;
+    border-radius: var(--nessus-radius);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+}
+
+.nessus-list-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: var(--nessus-radius) 0 0 var(--nessus-radius);
+    background: var(--nessus-primary);
+    opacity: 0;
+    transition: opacity 0.14s ease;
+}
+
+.nessus-list-row:hover {
+    border-color: rgba(0, 135, 245, 0.35);
+    box-shadow: var(--nessus-shadow-hover);
+}
+
+.nessus-list-row:hover::before {
+    opacity: 0.85;
+}
+
+.nessus-list-row[data-selected="true"] {
+    background: rgba(0, 135, 245, 0.05);
+    border-color: rgba(0, 135, 245, 0.45);
+}
+
+.nessus-list-row[data-selected="true"]::before {
+    opacity: 1;
+}
+
+.nessus-list-row[hidden] {
+    display: none !important;
+}
+
+.nessus-list-row[data-nessus-syncing="true"] {
+    border-color: rgba(0, 135, 245, 0.45);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 135, 245, 0.05) 0%,
+            rgba(0, 135, 245, 0.12) 40%,
+            rgba(0, 135, 245, 0.05) 80%
+        );
+    background-size: 220% 100%;
+    animation: nessus-row-syncing 1.6s ease-in-out infinite;
+}
+
+.nessus-list-row[data-nessus-syncing="true"]::before {
+    opacity: 1;
+    animation: nessus-row-accent 1.6s ease-in-out infinite;
+}
+
+[data-bs-theme="dark"] .nessus-list-row[data-nessus-syncing="true"] {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(96, 165, 250, 0.08) 0%,
+            rgba(96, 165, 250, 0.16) 40%,
+            rgba(96, 165, 250, 0.08) 80%
+        );
+    background-size: 220% 100%;
+}
+
+.nessus-list-row.is-just-synced {
+    animation: nessus-row-flash 1.6s ease-out;
+}
+
+@keyframes nessus-row-syncing {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@keyframes nessus-row-accent {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+}
+
+@keyframes nessus-row-flash {
+    0%   { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.55); }
+    30%  { box-shadow: 0 0 0 8px rgba(25, 135, 84, 0.0); }
+    100% { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.0); }
+}
+
+.nessus-list-row__check {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.nessus-list-row__check input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    accent-color: var(--nessus-primary);
+}
+
+.nessus-list-row__body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nessus-list-row__heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.nessus-source-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 7px;
+    border-radius: 5px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+}
+
+.nessus-source-badge--vm {
+    background: rgba(0, 135, 245, 0.12);
+    color: var(--nessus-primary);
+}
+
+.nessus-source-badge--was {
+    background: rgba(111, 66, 193, 0.14);
+    color: #6f42c1;
+}
+
+.nessus-list-row__title {
+    margin: 0;
+    font-size: 0.97rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: inherit;
+    word-break: break-word;
+}
+
+.nessus-list-row__title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nessus-list-row__title a:hover {
+    color: var(--nessus-primary);
+    text-decoration: none;
+}
+
+.nessus-list-row__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-size: 0.78rem;
+    color: var(--nessus-muted);
+    line-height: 1.4;
+}
+
+.nessus-list-row__meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nessus-list-row__meta-item code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.74rem;
+    background: rgba(15, 23, 42, 0.05);
+    padding: 1px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+}
+
+[data-bs-theme="dark"] .nessus-list-row__meta-item code {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nessus-list-row__meta-item code:hover {
+    background: rgba(0, 135, 245, 0.12);
+    color: var(--nessus-primary);
+    border-color: rgba(0, 135, 245, 0.2);
+}
+
+.nessus-list-row__meta-item code.is-copied {
+    background: rgba(25, 135, 84, 0.18);
+    color: #198754;
+    border-color: rgba(25, 135, 84, 0.3);
+}
+
+.nessus-list-row__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.nessus-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+.nessus-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+}
+
+.nessus-status--success {
+    color: #198754;
+    background: rgba(25, 135, 84, 0.12);
+}
+
+.nessus-status--running {
+    color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.12);
+}
+
+.nessus-status--running::before {
+    animation: nessus-pulse 1.4s ease-in-out infinite;
+}
+
+.nessus-status--warning {
+    color: #b46309;
+    background: rgba(253, 126, 20, 0.14);
+}
+
+[data-bs-theme="dark"] .nessus-status--warning {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.16);
+}
+
+.nessus-status--danger {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.13);
+}
+
+[data-bs-theme="dark"] .nessus-status--danger {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.16);
+}
+
+.nessus-status--muted {
+    color: var(--nessus-muted);
+    background: rgba(108, 117, 125, 0.14);
+}
+
+.nessus-status--unknown {
+    color: var(--nessus-muted);
+    background: rgba(108, 117, 125, 0.08);
+    border: 1px dashed rgba(108, 117, 125, 0.35);
+}
+
+@keyframes nessus-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+}
+
+.nessus-list-page__empty {
+    text-align: center;
+    padding: 3.5rem 1rem;
+    border: 1px dashed var(--nessus-border);
+    border-radius: var(--nessus-radius);
+    color: var(--nessus-muted);
+    background: var(--nessus-surface);
+}
+
+.nessus-list-page__empty svg {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0.9rem;
+    opacity: 0.35;
+}
+
+.nessus-list-page__empty h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+}
+
+.nessus-selection-bar {
+    position: sticky;
+    bottom: 16px;
+    margin: 16px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: var(--tblr-dark, #1f2937);
+    color: #fff;
+    box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.55);
+    width: max-content;
+    max-width: 92%;
+    z-index: 50;
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.22s ease;
+}
+
+.nessus-selection-bar.is-active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nessus-selection-bar__count {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.nessus-selection-bar__divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.nessus-selection-bar button {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.84rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.14s ease;
+}
+
+.nessus-selection-bar button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nessus-selection-bar button.is-danger:hover {
+    background: rgba(220, 53, 69, 0.25);
+    color: #fff;
+}
+
+.nessus-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+    z-index: 9999;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.nessus-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--nessus-primary), transparent);
+    animation: nessus-progress-slide 1.6s linear infinite;
+}
+
+@keyframes nessus-progress-slide {
+    0% { left: -40%; }
+    100% { left: 100%; }
+}
+
+.nessus-toast-host {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.nessus-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--nessus-surface);
+    border: 1px solid var(--nessus-border);
+    box-shadow: 0 14px 32px -14px rgba(15, 23, 42, 0.35);
+    font-size: 0.85rem;
+    min-width: 240px;
+    max-width: 360px;
+    pointer-events: auto;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.28s ease;
+}
+
+.nessus-toast.is-visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.nessus-toast__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.nessus-toast--success .nessus-toast__icon { color: #198754; }
+.nessus-toast--info .nessus-toast__icon { color: var(--nessus-primary); }
+.nessus-toast--error .nessus-toast__icon { color: #dc3545; }
+.nessus-toast--warning .nessus-toast__icon { color: #b46309; }
+[data-bs-theme="dark"] .nessus-toast--warning .nessus-toast__icon { color: #fbbf24; }
+[data-bs-theme="dark"] .nessus-toast--error .nessus-toast__icon { color: #f87171; }
+
+.nessus-toast__body {
+    flex: 1;
+    line-height: 1.35;
+}
+
+.nessus-toast__close {
+    background: transparent;
+    border: none;
+    color: var(--nessus-muted);
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.nessus-toast__close:hover {
+    color: inherit;
+}
+
+.nessus-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+
+.nessus-modal-backdrop.is-visible {
+    opacity: 1;
+}
+
+.nessus-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -48%);
+    width: min(440px, 92vw);
+    background: var(--nessus-surface);
+    border-radius: 14px;
+    box-shadow: 0 30px 60px -20px rgba(15, 23, 42, 0.5);
+    z-index: 9999;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nessus-modal.is-visible {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+.nessus-modal__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px 6px;
+}
+
+.nessus-modal__icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.nessus-modal__icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.nessus-modal--danger .nessus-modal__icon {
+    background: rgba(220, 53, 69, 0.12);
+    color: #dc3545;
+}
+
+.nessus-modal--info .nessus-modal__icon {
+    background: rgba(0, 135, 245, 0.12);
+    color: var(--nessus-primary);
+}
+
+.nessus-modal__title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.nessus-modal__body {
+    padding: 8px 20px 6px 70px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--nessus-muted);
+}
+
+.nessus-modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 14px 20px 18px;
+}
+
+.nessus-modal__footer .nessus-btn-outline,
+.nessus-modal__footer .nessus-btn-primary {
+    padding: 7px 16px;
+}
+
+.nessus-modal__footer .nessus-btn-danger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: var(--nessus-radius-sm);
+    background: #dc3545;
+    color: #fff;
+    border: 1px solid transparent;
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.14s ease, transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.nessus-modal__footer .nessus-btn-danger:hover {
+    background: #bb2d3b;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -8px rgba(220, 53, 69, 0.6);
+}
+
+@media (max-width: 640px) {
+    .nessus-list-row {
+        grid-template-columns: auto 1fr;
+    }
+    .nessus-list-row__actions {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+        padding-top: 6px;
+        border-top: 1px dashed var(--nessus-border);
+    }
+    .nessus-modal__body {
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 540px) {
+    .nessus-list-page__hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nessus-list-page__actions {
+        width: 100%;
+    }
+
+    .nessus-list-page__actions .nessus-btn-primary,
+    .nessus-list-page__actions .nessus-btn-outline {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .nessus-list-page__toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nessus-list-page__search,
+    .nessus-list-page__filter {
+        max-width: none;
+        width: 100%;
+    }
+
+    .nessus-list-page__meta {
+        margin-left: 0;
+    }
+}
+
+/* ===== Tenable brand hero ===== */
+.nessus-list-page__hero {
+    position: relative;
+    overflow: hidden;
+    padding: 1.3rem 1.45rem;
+    border-radius: var(--nessus-radius);
+    background: var(--nessus-grad);
+    color: #fff;
+    box-shadow: var(--nessus-glow);
+}
+.nessus-list-page__hero::after {
+    content: "";
+    position: absolute;
+    top: -55%;
+    right: -6%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(38, 255, 147, 0.16), transparent 62%);
+    pointer-events: none;
+}
+.nessus-list-page__hero > * { position: relative; z-index: 1; }
+.nessus-list-page__hero .nessus-list-page__title { color: #fff; }
+.nessus-list-page__hero .nessus-stat-pill {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+}
+.nessus-list-page__hero .nessus-stat-pill--warn {
+    background: rgba(255, 185, 0, 0.22);
+    color: #ffdf8a;
+}
+.nessus-list-page__hero .nessus-stat-pill--muted {
+    background: rgba(255, 255, 255, 0.10);
+    color: rgba(255, 255, 255, 0.8);
+}
+.nessus-list-page__hero .nessus-btn-outline {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+.nessus-list-page__hero .nessus-btn-outline:hover {
+    border-color: #fff;
+    color: var(--nessus-midnight);
+    background: #fff;
+}
+.nessus-list-page__hero .nessus-btn-primary {
+    box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== Coverage report (VMs sem Nessus) ===== */
+.nessus-coverage-note {
+    margin: 0 0 1rem;
+    font-size: 0.85rem;
+    color: var(--nessus-muted);
+    max-width: 80ch;
+}
+.nessus-os-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+.nessus-os-chip--linux {
+    background: rgba(0, 184, 196, 0.14);
+    color: #0a7782;
+}
+[data-bs-theme="dark"] .nessus-os-chip--linux { color: #3fd7e3; }
+.nessus-os-chip--winserver {
+    background: rgba(0, 135, 245, 0.12);
+    color: var(--nessus-primary);
+}
+.nessus-coverage-table th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--nessus-muted);
+}
+.nessus-coverage-table td { vertical-align: middle; }
+.nessus-coverage-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    border: 1px dashed var(--nessus-border);
+    border-radius: var(--nessus-radius);
+    background: var(--nessus-grad-soft);
+}
+.nessus-coverage-empty i {
+    font-size: 2.2rem;
+    color: #0a7782;
+    margin-bottom: 0.2rem;
+}
+.nessus-coverage-empty strong { font-size: 1rem; }
+.nessus-coverage-empty span { color: var(--nessus-muted); font-size: 0.88rem; }

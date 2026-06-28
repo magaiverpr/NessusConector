@@ -1,0 +1,755 @@
+:root {
+    --nessus-radius: 12px;
+    --nessus-radius-sm: 8px;
+    --nessus-border: rgba(15, 23, 42, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(15, 23, 42, 0.35);
+    --nessus-primary: #0087f5;
+    --nessus-primary-strong: #0a6fd0;
+    --nessus-primary-rgb: 0, 135, 245;
+    --nessus-midnight: #041e42;
+    --nessus-midnight-2: #0a3a6b;
+    --nessus-neon: #26ff93;
+    --nessus-lucid: #00f0ff;
+    --nessus-gray: #8595a2;
+    --nessus-grad: linear-gradient(120deg, #041e42 0%, #0a3a6b 52%, #0087f5 100%);
+    --nessus-grad-soft: linear-gradient(120deg, rgba(4, 30, 66, 0.04), rgba(0, 135, 245, 0.08));
+    --nessus-glow: 0 18px 42px -18px rgba(4, 30, 66, 0.55);
+    --nessus-muted: var(--tblr-text-muted, #6c757d);
+    --nessus-surface: var(--tblr-bg-surface, #fff);
+    --nessus-surface-soft: rgba(15, 23, 42, 0.025);
+    --nessus-success: #198754;
+    --nessus-success-soft: rgba(25, 135, 84, 0.12);
+    --nessus-danger: #dc3545;
+    --nessus-danger-soft: rgba(220, 53, 69, 0.12);
+    --nessus-warning: #b46309;
+    --nessus-warning-soft: rgba(253, 126, 20, 0.14);
+}
+
+[data-bs-theme="dark"] {
+    --nessus-border: rgba(255, 255, 255, 0.08);
+    --nessus-shadow-hover: 0 14px 32px -18px rgba(0, 0, 0, 0.7);
+    --nessus-surface-soft: rgba(255, 255, 255, 0.03);
+    --nessus-warning: #fbbf24;
+    --nessus-success: #34d399;
+}
+
+.nessus-scan-form-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ---- Hero ---- */
+
+.nessus-scan-form-hero {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 0.5rem;
+}
+
+.nessus-scan-form-hero__title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.nessus-scan-form-hero__back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    color: var(--nessus-muted);
+    text-decoration: none;
+    transition: border-color 0.14s ease, color 0.14s ease, background 0.14s ease;
+}
+
+.nessus-scan-form-hero__back:hover {
+    border-color: var(--nessus-primary);
+    color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.06);
+}
+
+.nessus-scan-form-hero__title {
+    margin: 0 0 0.2rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.nessus-scan-form-hero__subtitle {
+    margin: 0;
+    color: var(--nessus-muted);
+    font-size: 0.88rem;
+    max-width: 60ch;
+}
+
+.nessus-scan-form-hero__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* ---- Alert ---- */
+
+.nessus-scan-form-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 11px 14px;
+    border-radius: var(--nessus-radius-sm);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border: 1px solid transparent;
+}
+
+.nessus-scan-form-alert svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.nessus-scan-form-alert--info {
+    background: rgba(0, 135, 245, 0.08);
+    color: var(--nessus-primary);
+    border-color: rgba(0, 135, 245, 0.2);
+}
+
+.nessus-scan-form-alert--danger {
+    background: var(--nessus-danger-soft);
+    color: var(--nessus-danger);
+    border-color: rgba(220, 53, 69, 0.25);
+}
+
+/* ---- Form ---- */
+
+.nessus-scan-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ---- Card ---- */
+
+.nessus-scan-form-card {
+    background: var(--nessus-surface);
+    border: 1px solid var(--nessus-border);
+    border-radius: var(--nessus-radius);
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+}
+
+.nessus-scan-form-card:focus-within {
+    border-color: rgba(0, 135, 245, 0.35);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.08);
+}
+
+.nessus-scan-form-card__head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid var(--nessus-border);
+    background: linear-gradient(180deg, var(--nessus-surface-soft) 0%, transparent 100%);
+}
+
+.nessus-scan-form-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.nessus-scan-form-card__icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nessus-scan-form-card__icon--source {
+    background: linear-gradient(135deg, #0087f5 0%, #041e42 100%);
+}
+
+.nessus-scan-form-card__icon--import {
+    background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+}
+
+.nessus-scan-form-card__title {
+    margin: 0 0 0.15rem;
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+
+.nessus-scan-form-card__hint {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--nessus-muted);
+    line-height: 1.4;
+}
+
+.nessus-scan-form-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 1.15rem;
+}
+
+/* ---- Fields ---- */
+
+.nessus-scan-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nessus-scan-form-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nessus-scan-form-required {
+    color: var(--nessus-danger);
+    font-weight: 700;
+}
+
+.nessus-scan-form-input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.nessus-scan-form-input {
+    flex: 1 1 240px;
+    padding: 0.55rem 0.8rem;
+    border-radius: var(--nessus-radius-sm);
+    border: 1px solid var(--nessus-border);
+    background: var(--nessus-surface);
+    color: inherit;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-family: 'SFMono-Regular', Menlo, Monaco, 'Liberation Mono', monospace;
+    transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.nessus-scan-form-input::placeholder {
+    color: var(--nessus-muted);
+    opacity: 0.65;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.nessus-scan-form-input:hover:not(:focus) {
+    border-color: rgba(0, 135, 245, 0.25);
+}
+
+.nessus-scan-form-input:focus {
+    outline: none;
+    border-color: var(--nessus-primary);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.15);
+}
+
+.nessus-scan-form-input[aria-invalid="true"] {
+    border-color: var(--nessus-danger);
+    box-shadow: 0 0 0 3px var(--nessus-danger-soft);
+}
+
+.nessus-scan-form-input[aria-invalid="false"]:not(:focus) {
+    border-color: rgba(25, 135, 84, 0.4);
+}
+
+.nessus-scan-form-hint {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--nessus-muted);
+    line-height: 1.4;
+}
+
+.nessus-scan-form-feedback {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--nessus-danger);
+    line-height: 1.4;
+}
+
+.nessus-scan-form-feedback--success {
+    color: var(--nessus-success);
+}
+
+/* ---- Source toggle ---- */
+
+.nessus-scan-form-source {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+}
+
+.nessus-scan-form-source__option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.7rem 0.95rem;
+    border: 1.5px solid var(--nessus-border);
+    border-radius: var(--nessus-radius-sm);
+    background: var(--nessus-surface);
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.nessus-scan-form-source__option:hover {
+    border-color: rgba(0, 135, 245, 0.4);
+    background: rgba(0, 135, 245, 0.04);
+}
+
+.nessus-scan-form-source__option[data-active="true"] {
+    border-color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.07);
+    box-shadow: 0 0 0 3px rgba(0, 135, 245, 0.12);
+}
+
+.nessus-scan-form-source__option--was[data-active="true"] {
+    border-color: #00b8c4;
+    background: rgba(124, 58, 237, 0.07);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.nessus-scan-form-source__option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+.nessus-scan-form-source__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: #fff;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+    transition: background 0.15s ease;
+}
+
+.nessus-scan-form-source__option--vm[data-active="true"] .nessus-scan-form-source__icon {
+    background: linear-gradient(135deg, #0087f5 0%, #041e42 100%);
+}
+
+.nessus-scan-form-source__option--was[data-active="true"] .nessus-scan-form-source__icon {
+    background: linear-gradient(135deg, #00b8c4 0%, #0087f5 100%);
+}
+
+.nessus-scan-form-source__icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.nessus-scan-form-source__label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ---- Preview card ---- */
+
+.nessus-scan-form-preview {
+    margin-top: 0.2rem;
+    padding: 14px 16px;
+    border-radius: var(--nessus-radius-sm);
+    background: var(--nessus-success-soft);
+    border: 1px solid rgba(25, 135, 84, 0.25);
+    color: var(--nessus-success);
+    animation: nessus-scan-preview-in 0.25s ease-out;
+}
+
+@keyframes nessus-scan-preview-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.nessus-scan-form-preview__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nessus-scan-form-preview__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--nessus-success);
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.nessus-scan-form-preview__icon svg {
+    width: 14px;
+    height: 14px;
+}
+
+.nessus-scan-form-preview__title {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: inherit;
+    word-break: break-word;
+}
+
+.nessus-scan-form-preview__caption {
+    font-size: 0.75rem;
+    opacity: 0.85;
+}
+
+.nessus-scan-form-preview__meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px 14px;
+    margin: 12px 0 0;
+    padding: 0;
+    font-size: 0.85rem;
+    color: var(--nessus-success);
+}
+
+@media (min-width: 640px) {
+    .nessus-scan-form-preview__meta {
+        grid-template-columns: max-content 1fr;
+    }
+}
+
+.nessus-scan-form-preview__meta dt {
+    margin: 0;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.nessus-scan-form-preview__meta dd {
+    margin: 0 0 6px 0;
+    font-weight: 500;
+    color: inherit;
+    word-break: break-word;
+}
+
+@media (min-width: 640px) {
+    .nessus-scan-form-preview__meta dd {
+        margin-bottom: 0;
+    }
+}
+
+[data-bs-theme="dark"] .nessus-scan-form-preview {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.3);
+    color: #6ee7b7;
+}
+
+[data-bs-theme="dark"] .nessus-scan-form-preview__icon {
+    background: #34d399;
+    color: #022c22;
+}
+
+[data-bs-theme="dark"] .nessus-scan-form-preview__meta {
+    color: inherit;
+}
+
+/* ---- Severity chips ---- */
+
+.nessus-scan-form-severities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+}
+
+.nessus-scan-form-severity {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 12px;
+    border: 1.5px solid var(--nessus-border);
+    border-radius: 999px;
+    background: var(--nessus-surface);
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.84rem;
+    font-weight: 500;
+    transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+
+.nessus-scan-form-severity input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+.nessus-scan-form-severity__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: opacity 0.14s ease, transform 0.14s ease;
+}
+
+.nessus-scan-form-severity:hover {
+    border-color: rgba(0, 135, 245, 0.35);
+}
+
+.nessus-scan-form-severity:has(input:checked) .nessus-scan-form-severity__dot {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+.nessus-scan-form-severity--critical { color: #8f233f; }
+.nessus-scan-form-severity--critical:has(input:checked) {
+    background: rgba(143, 35, 63, 0.08);
+    border-color: rgba(143, 35, 63, 0.45);
+}
+
+.nessus-scan-form-severity--high { color: #b91c1c; }
+.nessus-scan-form-severity--high:has(input:checked) {
+    background: rgba(220, 53, 69, 0.08);
+    border-color: rgba(220, 53, 69, 0.45);
+}
+
+.nessus-scan-form-severity--medium { color: #b45309; }
+.nessus-scan-form-severity--medium:has(input:checked) {
+    background: rgba(253, 126, 20, 0.1);
+    border-color: rgba(253, 126, 20, 0.5);
+}
+
+.nessus-scan-form-severity--low { color: #854d0e; }
+.nessus-scan-form-severity--low:has(input:checked) {
+    background: rgba(234, 179, 8, 0.12);
+    border-color: rgba(234, 179, 8, 0.55);
+}
+
+.nessus-scan-form-severity--info { color: #0a6fd0; }
+.nessus-scan-form-severity--info:has(input:checked) {
+    background: rgba(0, 135, 245, 0.08);
+    border-color: rgba(0, 135, 245, 0.45);
+}
+
+[data-bs-theme="dark"] .nessus-scan-form-severity--medium { color: #fbbf24; }
+[data-bs-theme="dark"] .nessus-scan-form-severity--low    { color: #fde047; }
+[data-bs-theme="dark"] .nessus-scan-form-severity--high   { color: #f87171; }
+
+/* ---- Meta grid ---- */
+
+.nessus-scan-form-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.6rem;
+    padding-top: 0.4rem;
+    border-top: 1px dashed var(--nessus-border);
+}
+
+.nessus-scan-form-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 0;
+}
+
+.nessus-scan-form-meta-item__label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--nessus-muted);
+    font-weight: 600;
+}
+
+.nessus-scan-form-meta-item__value {
+    font-size: 0.92rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* ---- Buttons ---- */
+
+.nessus-scan-form-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: var(--nessus-radius-sm);
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+    white-space: nowrap;
+}
+
+.nessus-scan-form-btn[disabled] {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.nessus-scan-form-btn--primary {
+    background: var(--nessus-primary);
+    color: #fff;
+    border-color: var(--nessus-primary);
+}
+
+.nessus-scan-form-btn--primary:hover:not([disabled]) {
+    background: #0a6fd0;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -8px rgba(0, 135, 245, 0.6);
+}
+
+.nessus-scan-form-btn--ghost {
+    background: transparent;
+    color: inherit;
+    border-color: var(--nessus-border);
+}
+
+.nessus-scan-form-btn--ghost:hover:not([disabled]) {
+    border-color: var(--nessus-primary);
+    color: var(--nessus-primary);
+    background: rgba(0, 135, 245, 0.06);
+}
+
+.nessus-scan-form-btn--verify {
+    flex: 0 0 auto;
+}
+
+.nessus-scan-form-btn[data-loading="true"] {
+    pointer-events: none;
+    position: relative;
+    color: transparent;
+}
+
+.nessus-scan-form-btn[data-loading="true"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    color: var(--nessus-primary);
+    animation: nessus-scan-form-spin 0.7s linear infinite;
+}
+
+.nessus-scan-form-btn[data-loading="true"].nessus-scan-form-btn--primary::after {
+    color: #fff;
+}
+
+@keyframes nessus-scan-form-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---- Footer ---- */
+
+.nessus-scan-form-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.5rem 0;
+    flex-wrap: wrap;
+}
+
+.nessus-scan-form-readonly {
+    margin: 0;
+    color: var(--nessus-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+    flex: 1;
+}
+
+/* Mobile */
+
+@media (max-width: 540px) {
+    .nessus-scan-form-hero {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nessus-scan-form-hero__actions {
+        justify-content: flex-start;
+    }
+
+    .nessus-scan-form-input-group {
+        flex-direction: column;
+    }
+
+    .nessus-scan-form-btn--verify {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ===== Tenable brand hero ===== */
+.nessus-scan-form-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 1.25rem 1.4rem;
+    border-radius: var(--nessus-radius);
+    background: var(--nessus-grad);
+    color: #fff;
+    box-shadow: var(--nessus-glow);
+}
+.nessus-scan-form-hero::after {
+    content: "";
+    position: absolute;
+    top: -55%;
+    right: -6%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(38, 255, 147, 0.16), transparent 62%);
+    pointer-events: none;
+}
+.nessus-scan-form-hero > * { position: relative; z-index: 1; }
+.nessus-scan-form-hero__title { color: #fff; }
+.nessus-scan-form-hero__subtitle { color: rgba(255, 255, 255, 0.82); }
+.nessus-scan-form-hero__back {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
+.nessus-scan-form-hero__back:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+}
+.nessus-scan-form-hero .nessus-scan-form-btn--ghost {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+.nessus-scan-form-hero .nessus-scan-form-btn--ghost:hover:not([disabled]) {
+    background: #fff;
+    color: var(--nessus-midnight);
+    border-color: #fff;
+}

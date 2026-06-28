@@ -1,6 +1,6 @@
 <root>
 <name>Nessus Conector</name>
-<key>Nessus Conector</key>
+<key>nessusglpi</key>
 <state>stable</state>
 <!--  stable | unstable | beta | alpha  -->
 <logo>https://raw.githubusercontent.com/magaiverpr/NessusConector/refs/heads/main/images/nessus-logo.png</logo>
@@ -10,7 +10,7 @@
 <lang>en_GB</lang>
 </short>
 <long>
-<en>This plugin aims to connect Nessus with GLPI to synchronize vulnerabilities found with assets, generating a history and creating tickets based on each vulnerability found for internal handling and documentation.</en>
+<en>This plugin connects Nessus and Tenable WAS with GLPI to synchronize discovered vulnerabilities with assets, keep a synchronization history, and create tickets from each finding for internal handling and documentation. It encrypts API secrets at rest, synchronizes unattended through cron tasks, and automatically resolves tickets once their vulnerability is no longer detected.</en>
 <lang>en_GB</lang>
 </long>
 </description>
@@ -23,7 +23,7 @@
 </authors>
 <versions>
 <version>
-<num>1.2.0</num>
+<num>1.3.0</num>
 <compatibility>~11.0.0</compatibility>
 <download_url>https://github.com/magaiverpr/NessusConector/releases</download_url>
 </version>

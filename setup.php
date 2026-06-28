@@ -7,11 +7,13 @@ use GlpiPlugin\Nessusglpi\Profile as NessusProfile;
 use GlpiPlugin\Nessusglpi\Scan;
 use GlpiPlugin\Nessusglpi\Vulnerability;
 
-define('PLUGIN_NESSUSGLPI_VERSION', '1.3.0');
+define('PLUGIN_NESSUSGLPI_VERSION', '1.5.0');
 
 function plugin_init_nessusglpi(): void
 {
     global $PLUGIN_HOOKS;
+
+    NessusProfile::syncCurrentProfileRights();
 
     $PLUGIN_HOOKS[Hooks::CSRF_COMPLIANT]['nessusglpi'] = true;
     $PLUGIN_HOOKS[Hooks::CONFIG_PAGE]['nessusglpi'] = 'front/config.form.php';
@@ -65,4 +67,3 @@ function plugin_nessusglpi_check_config(bool $verbose = false): bool
 {
     return true;
 }
-

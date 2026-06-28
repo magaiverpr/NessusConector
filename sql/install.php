@@ -11,7 +11,7 @@ function plugin_nessusglpi_run_install(): bool
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `api_url` VARCHAR(255) DEFAULT NULL,
             `access_key` VARCHAR(255) DEFAULT NULL,
-            `secret_key` VARCHAR(255) DEFAULT NULL,
+            `secret_key` TEXT DEFAULT NULL,
             `timeout` INT UNSIGNED NOT NULL DEFAULT 30,
             `allowed_itemtypes` JSON DEFAULT NULL,
             `date_mod` TIMESTAMP NULL DEFAULT NULL,
@@ -21,7 +21,8 @@ function plugin_nessusglpi_run_install(): bool
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `name` VARCHAR(255) NOT NULL,
             `scan_id` VARCHAR(64) NOT NULL,
-            `entities_id` INT NOT NULL DEFAULT 0,
+            `scan_type` VARCHAR(20) NOT NULL DEFAULT 'nessus',
+            `entities_id` INT UNSIGNED NOT NULL DEFAULT 0,
             `import_severities` JSON DEFAULT NULL,
             `is_active` TINYINT(1) NOT NULL DEFAULT 1,
             `last_scan_at` TIMESTAMP NULL DEFAULT NULL,
@@ -50,7 +51,7 @@ function plugin_nessusglpi_run_install(): bool
         "CREATE TABLE IF NOT EXISTS `glpi_plugin_nessusglpi_sync_jobs` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `plugin_nessusglpi_scans_id` INT UNSIGNED NOT NULL,
-            `entities_id` INT NOT NULL DEFAULT 0,
+            `entities_id` INT UNSIGNED NOT NULL DEFAULT 0,
             `status` VARCHAR(32) NOT NULL DEFAULT 'pending',
             `requested_by` INT UNSIGNED NOT NULL DEFAULT 0,
             `requested_at` TIMESTAMP NULL DEFAULT NULL,
@@ -162,7 +163,9 @@ function plugin_nessusglpi_run_install(): bool
     }
 
     $upgradeQueries = [
-        "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD COLUMN `entities_id` INT NOT NULL DEFAULT 0 AFTER `scan_id`",
+        "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD COLUMN `entities_id` INT UNSIGNED NOT NULL DEFAULT 0 AFTER `scan_id`",
+        "ALTER TABLE `glpi_plugin_nessusglpi_scans` MODIFY COLUMN `entities_id` INT UNSIGNED NOT NULL DEFAULT 0",
+        "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD COLUMN `scan_type` VARCHAR(20) NOT NULL DEFAULT 'nessus' AFTER `scan_id`",
         "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD COLUMN `import_severities` JSON DEFAULT NULL AFTER `entities_id`",
         "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD KEY `entities_id` (`entities_id`)",
         "ALTER TABLE `glpi_plugin_nessusglpi_scans` ADD COLUMN `last_scan_at` TIMESTAMP NULL DEFAULT NULL AFTER `is_active`",
@@ -171,7 +174,7 @@ function plugin_nessusglpi_run_install(): bool
         "CREATE TABLE IF NOT EXISTS `glpi_plugin_nessusglpi_sync_jobs` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `plugin_nessusglpi_scans_id` INT UNSIGNED NOT NULL,
-            `entities_id` INT NOT NULL DEFAULT 0,
+            `entities_id` INT UNSIGNED NOT NULL DEFAULT 0,
             `status` VARCHAR(32) NOT NULL DEFAULT 'pending',
             `requested_by` INT UNSIGNED NOT NULL DEFAULT 0,
             `requested_at` TIMESTAMP NULL DEFAULT NULL,
@@ -185,6 +188,11 @@ function plugin_nessusglpi_run_install(): bool
             KEY `entities_id` (`entities_id`),
             KEY `status` (`status`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+        "ALTER TABLE `glpi_plugin_nessusglpi_sync_jobs` MODIFY COLUMN `entities_id` INT UNSIGNED NOT NULL DEFAULT 0",
+        // GLPIKey::encrypt() output is far longer than the original key (often
+        // > 1KB), so VARCHAR(255) overflows on save ("Data too long for column
+        // 'secret_key'"). Widen to TEXT to hold the encrypted credential.
+        "ALTER TABLE `glpi_plugin_nessusglpi_configs` MODIFY COLUMN `secret_key` TEXT DEFAULT NULL",
         "CREATE TABLE IF NOT EXISTS `glpi_plugin_nessusglpi_ticket_memory` (
             `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
             `vuln_key` VARCHAR(255) NOT NULL,
